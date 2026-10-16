@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>VINC Bengaluru North</title>
+<title>VINC Bengaluru</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="VINC Learning Centre for Skill Education, Bengaluru North. Hands-on robotics, electronics and AI for Grades 6–12 on weekends, and career courses for undergraduates on weekdays. Opening mid-November 2026.">
+<meta name="description" content="VINC Learning Centre for Skill Education, Bengaluru. Hands-on robotics, electronics and AI for Grades 6–12 on weekends, and career courses for undergraduates on weekdays. Opening mid-November 2026.">
 <link rel="icon" href="assets/logo-light.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,6 +36,7 @@
   --focus: #1F6F66;
   --logo-light: inline-block;
   --logo-dark: none;
+  --shadow: 0 14px 34px -18px rgba(43, 26, 16, 0.45);
 
   --display: "Lora", Georgia, "Times New Roman", serif;
   --body: "DM Sans", "Segoe UI", Arial, sans-serif;
@@ -58,7 +59,7 @@
     --line: #47352A; --grid: rgba(244, 234, 219, 0.05); --amber: #E09A35; --amber-ink: #F0B44C; --rust: #CC5C35;
     --teal: #2A8378; --plum: #A4466E; --olive: #5D8A30; --on-part: #FFF7EA; --on-amber: #2B1A10;
     --band: #F4EADB; --on-band: #2B1A10; --band-accent: #9A5B0A; --focus: #F0B44C;
-    --logo-light: none; --logo-dark: inline-block; color-scheme: dark;
+    --logo-light: none; --logo-dark: inline-block; --shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.7); color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
@@ -66,7 +67,7 @@
   --line: #47352A; --grid: rgba(244, 234, 219, 0.05); --amber: #E09A35; --amber-ink: #F0B44C; --rust: #CC5C35;
   --teal: #2A8378; --plum: #A4466E; --olive: #5D8A30; --on-part: #FFF7EA; --on-amber: #2B1A10;
   --band: #F4EADB; --on-band: #2B1A10; --band-accent: #9A5B0A; --focus: #F0B44C;
-  --logo-light: none; --logo-dark: inline-block; color-scheme: dark;
+  --logo-light: none; --logo-dark: inline-block; --shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.7); color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -113,7 +114,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .btn:hover { transform: translateY(-1px); }
 .btn-primary { background: var(--amber); color: var(--on-amber); }
 .btn-ghost { border-color: var(--ink); color: var(--ink); background: transparent; }
-.btn svg { width: 18px; height: 18px; }
+.btn svg { width: 18px; height: 18px; transition: transform .25s ease; }
+.btn:hover svg { transform: translateX(4px); }
 
 /* Header */
 .site-header {
@@ -348,16 +350,119 @@ form.card { background: var(--card); border: 1px solid var(--line); border-radiu
 .done .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 
 /* Footer */
-footer { background: var(--band); color: var(--on-band); padding-block: 48px 40px; }
+footer { background: var(--band); color: var(--on-band); padding-block: 48px 32px; }
+footer a { color: inherit; }
+footer address { font-style: normal; font-size: var(--t-small); line-height: 1.55; opacity: .9; max-width: 46ch; }
+.foot-info { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 20px 40px; margin-top: 32px; }
+.foot-head { font-family: var(--mono); font-size: var(--t-label); letter-spacing: .12em; text-transform: uppercase; opacity: .7; margin-bottom: 6px !important; max-width: none !important; }
+.policies { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 28px; padding-top: 20px; border-top: 1px solid currentColor; border-top-color: color-mix(in srgb, var(--on-band) 25%, transparent); }
+.policies a { font-size: var(--t-small); text-decoration: none; opacity: .85; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .3s ease, opacity .2s; }
+.policies a:hover { opacity: 1; background-size: 100% 1px; }
+.copyright { margin-top: 14px; font-size: .8125rem; opacity: .65; }
+address { font-style: normal; }
+.email-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.copy-chip { border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 2px 12px; font-size: .8125rem; font-weight: 600; cursor: pointer; }
 .foot { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 28px; align-items: end; }
 .foot blockquote { margin: 0; font-family: var(--display); font-style: italic; font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem); line-height: 1.25; max-width: 24ch; }
 .foot p { font-size: var(--t-small); opacity: .85; max-width: 70ch; }
 .foot-parts { display: flex; height: 10px; border-radius: 5px; overflow: hidden; margin-top: 28px; }
 .foot-parts i { flex: 1; }
 
-/* Reveal: visible at rest, lifts in once when JS runs */
-.js .reveal { transition: transform .6s ease, opacity .6s ease; }
-.js .reveal.pre { transform: translateY(14px); opacity: .001; }
+/* Motion: one orchestrated moment (the four parts assemble in the hero), then quiet scroll reveals
+   and small one-shot touches. Everything is readable at rest; reduced-motion turns it all off. */
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes part-in { 0% { opacity: 0; transform: translate(var(--fx), var(--fy)) rotate(var(--fr)) scale(.7); } 55% { opacity: 1; } 100% { opacity: 1; transform: none; } }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes drift { to { background-position: 28px 28px, 28px 28px; } }
+@keyframes ring { 0% { box-shadow: 0 0 0 0 var(--ring); } 80%, 100% { box-shadow: 0 0 0 9px transparent; } }
+@keyframes dot-pop { from { transform: scale(0); } 70% { transform: scale(1.25); } to { transform: scale(1); } }
+@keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes fade-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes chip-in { from { opacity: 0; transform: translateY(8px) scale(.9); } to { opacity: 1; transform: none; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes wiggle { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(-18deg); } 65% { transform: rotate(14deg); } }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes match { 0% { transform: scale(.97); } 60% { transform: scale(1.015); } 100% { transform: none; } }
+@keyframes blink { 50% { opacity: .25; } }
+
+/* Hero: drifting workbench grid, copy rises, the four parts fly in and snap together */
+.hero { animation: drift 40s linear infinite; }
+.js .hero-copy > * { animation: rise .8s cubic-bezier(.2, .7, .2, 1) backwards; }
+.js .hero-copy > :nth-child(2) { animation-delay: .1s; }
+.js .hero-copy > :nth-child(3) { animation-delay: .22s; }
+.js .hero-copy > :nth-child(4) { animation-delay: .34s; }
+.js .hero-copy > :nth-child(5) { animation-delay: .46s; }
+.js .part { animation: part-in 1s cubic-bezier(.2, .9, .25, 1.15) backwards; }
+.js .part[data-part="build"] { --fx: -70px; --fy: -50px; --fr: -14deg; animation-delay: .3s; }
+.js .part[data-part="code"] { --fx: 70px; --fy: -60px; --fr: 12deg; animation-delay: .42s; }
+.js .part[data-part="explore"] { --fx: -60px; --fy: 70px; --fr: 10deg; animation-delay: .54s; }
+.js .part[data-part="careers"] { --fx: 70px; --fy: 60px; --fr: -10deg; animation-delay: .66s; }
+.js .part-caption { animation: rise .7s .95s cubic-bezier(.2, .7, .2, 1) backwards; }
+.part svg { transform-origin: 50% 50%; }
+.part:hover svg, .part:focus-visible svg { animation: wiggle .6s ease; }
+.part[data-part="code"]:hover svg, .part[data-part="code"]:focus-visible svg { animation: bob .45s ease 2; }
+.part[data-part="explore"]:hover svg, .part[data-part="explore"]:focus-visible svg { animation: spin 1.2s cubic-bezier(.4, 0, .2, 1); }
+.part[data-part="careers"]:hover svg, .part[data-part="careers"]:focus-visible svg { animation: bob .7s ease 2; }
+.hero-copy h1 em { position: relative; display: inline-block; }
+.scribble { position: absolute; left: -2%; bottom: -0.16em; width: 104%; height: .32em; overflow: visible; }
+.scribble path { fill: none; stroke: var(--amber); stroke-width: 5; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.js .scribble path { stroke-dashoffset: 1; animation: draw .9s 1.15s cubic-bezier(.6, 0, .2, 1) forwards; }
+.opening-chip b { --ring: color-mix(in srgb, var(--teal) 55%, transparent); animation: ring 2.4s 1.8s ease-out infinite; }
+
+/* Header gains a soft shadow once the page scrolls */
+.site-header { transition: box-shadow .3s ease; }
+.site-header.scrolled { box-shadow: var(--shadow); }
+
+/* Vocabulary strip: chips pop in and the words we avoid get struck through */
+.vocab li.no { text-decoration: none; position: relative; }
+.vocab li.no::after { content: ""; position: absolute; left: 9px; right: 9px; top: 52%; height: 1.5px; background: currentColor; transform-origin: left center; }
+.js .vocab li.no::after { transform: scaleX(0); }
+.js .vocab.go li.no::after { animation: grow .5s .5s cubic-bezier(.6, 0, .2, 1) forwards; }
+.js .vocab.go li.no:nth-child(2)::after { animation-delay: .7s; }
+.js .vocab.go li.no:nth-child(3)::after { animation-delay: .9s; }
+.js .vocab.go li.yes { animation: chip-in .45s cubic-bezier(.2, .9, .3, 1.3) backwards; }
+.js .vocab.go li.yes:nth-child(2) { animation-delay: .07s; }
+.js .vocab.go li.yes:nth-child(3) { animation-delay: .14s; }
+.js .vocab.go li.yes:nth-child(4) { animation-delay: .21s; }
+.js .vocab.go li.yes:nth-child(5) { animation-delay: .28s; }
+
+/* Scroll reveal: visible at rest; only blocks below the fold lift in, groups in a light stagger */
+.js .reveal { transition: transform .7s cubic-bezier(.2, .7, .2, 1), opacity .7s ease; transition-delay: var(--d, 0ms); }
+.js .reveal.pre { transform: translateY(22px); opacity: .001; }
+
+/* Cards lift on hover */
+.offer, .tl, .mandate, .week-card { transition: transform .3s ease, box-shadow .3s ease, opacity .3s ease; }
+.offer:hover, .tl:hover, .mandate:hover, .week-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.programme.is-match { animation: match .5s ease; }
+
+/* Week, journey and audience panels ease in when they change */
+.week-panel:not([hidden]) > * { animation: fade-up .45s ease backwards; }
+.week-panel:not([hidden]) > :nth-child(2) { animation-delay: .08s; }
+.journey-progress { height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.journey-progress i { display: block; height: 100%; width: 25%; background: var(--rust); border-radius: 2px; transition: width .5s cubic-bezier(.2, .7, .2, 1); }
+.journey-panel.swap > * { animation: fade-up .4s ease backwards; }
+.journey-panel.swap > :nth-child(2) { animation-delay: .06s; }
+.offer:nth-child(2) { --i: 1; } .offer:nth-child(3) { --i: 2; } .offer:nth-child(4) { --i: 3; } .offer:nth-child(5) { --i: 4; } .offer:nth-child(6) { --i: 5; }
+[role="tabpanel"]:not([hidden]) .offer { animation: fade-up .5s ease backwards; animation-delay: calc(var(--i, 0) * 60ms); }
+
+/* Seat board: the 100 seats fill in one by one */
+.seat-board.go .dots i { animation: dot-pop .45s cubic-bezier(.2, .9, .3, 1.3) backwards; animation-delay: calc(var(--n) * 9ms); }
+
+/* Opening plan: a live dot on the current or next week */
+.tl.is-now .tl-state::before, .tl.is-next .tl-state::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; margin-right: 6px; vertical-align: 1px; animation: blink 1.4s ease-in-out infinite; }
+
+/* Footer colour bar draws in */
+#foot-parts i { transform-origin: left center; }
+.js #foot-parts.go i { animation: grow .7s cubic-bezier(.2, .7, .2, 1) backwards; }
+.js #foot-parts.go i:nth-child(2) { animation-delay: .12s; }
+.js #foot-parts.go i:nth-child(3) { animation-delay: .24s; }
+.js #foot-parts.go i:nth-child(4) { animation-delay: .36s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js .scribble path { stroke-dashoffset: 0; }
+  .js .vocab li.no::after { transform: none; }
+}
+
 
 @media (max-width: 900px) {
   .hero-grid, .quarter-grid, .enquire-grid, .journey-panel, .week-panel { grid-template-columns: 1fr; }
@@ -368,7 +473,7 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
 @media (max-width: 680px) {
   .mandates, .programmes, .offer-grid, .timeline, .field-row { grid-template-columns: 1fr; }
   .journey-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .foot { grid-template-columns: 1fr; }
+  .foot, .foot-info { grid-template-columns: 1fr; }
   .week { gap: 4px; }
   .day { font-size: .875rem; padding: 16px 2px 12px; border-radius: 12px; }
   .week-legend { font-size: .75rem; gap: 4px; }
@@ -394,7 +499,7 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
     <a class="brand" href="#top" aria-label="VINC home">
       <img class="logo-l" src="assets/logo-light.png" alt="VINC, the sum of parts" width="110" height="38">
       <img class="logo-d" src="assets/logo-dark.png" alt="VINC, the sum of parts" width="110" height="38">
-      <span>Learning Centre<br>Bengaluru North</span>
+      <span>Learning Centre<br>Bengaluru</span>
     </a>
     <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav" aria-label="Main">
@@ -415,10 +520,10 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
   <section class="hero" aria-labelledby="hero-title">
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <p class="label">Learning Centre for Skill Education · Bengaluru North</p>
-        <h1 id="hero-title">A skills studio where students <em>build</em></h1>
+        <p class="label">Learning Centre for Skill Education · Bengaluru</p>
+        <h1 id="hero-title">A skills studio where students <em>build<svg class="scribble" viewBox="0 0 200 24" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 16 C 42 5, 78 21, 118 10 S 176 6, 197 14"/></svg></em></h1>
         <p class="lead">Hands-on robotics, electronics, coding and AI for Grades 6–12 on weekends. Job-oriented career courses for undergraduates on weekdays. One centre, one roof, real projects.</p>
-        <p class="opening-chip"><b>Opening</b> Mid-November 2026 · Bengaluru North</p>
+        <p class="opening-chip"><b>Opening</b> Mid-November 2026 · Bengaluru</p>
         <div class="hero-ctas">
           <a class="btn btn-primary" href="#enquire">Book a free demo class <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
           <a class="btn btn-ghost" href="#programmes">Find your child's programme</a>
@@ -461,7 +566,7 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
         <h2 id="why-title">Skill education is now part of every CBSE school year</h2>
         <p class="lead">From the 2026–27 session, CBSE schools teach skill education from Class 6, and computational thinking and AI from Class 3. Students need somewhere to build what they read about.</p>
       </div>
-      <div class="mandates">
+      <div class="mandates" data-stagger>
         <article class="mandate reveal">
           <p class="label">Grades 6–8 · Middle stage</p>
           <h3>NCERT's Kaushal Bodh</h3>
@@ -509,7 +614,7 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
         <p class="grade-result" id="grade-result" aria-live="polite"></p>
       </div>
 
-      <div class="programmes" id="programme-cards">
+      <div class="programmes" id="programme-cards" data-stagger>
         <article class="programme building" data-min="6" data-max="8" id="prog-building">
           <p class="label">Grades 6–8</p>
           <h3>Building</h3>
@@ -630,7 +735,7 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
           <h2 id="quarter-title">100 weekend seats, four batches of 25</h2>
           <p class="lead">Small batches keep every student at a bench with a mentor. Families see progress three ways each quarter.</p>
         </div>
-        <ol class="steps">
+        <ol class="steps" data-stagger>
           <li><div><h3>Project showcase</h3><p>Students present their work to parents and guests at the end of every quarter.</p></div></li>
           <li><div><h3>Project portfolio</h3><p>Every project documented, from first idea to finished work.</p></div></li>
           <li><div><h3>Skills report card</h3><p>A clear quarterly picture of what your child can now do.</p></div></li>
@@ -658,6 +763,7 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
         <p class="lead">Try the online lessons, get a skill score and spend a session in the lab before you decide.</p>
       </div>
       <div class="journey">
+        <div class="journey-progress" aria-hidden="true"><i id="journey-bar"></i></div>
         <ol class="journey-track" role="tablist" aria-label="Steps from sign-up to enrolment" id="journey-track">
           <li role="presentation"><button role="tab" id="jt-0" aria-controls="journey-panel" aria-selected="true" data-step="0"><span class="label">Step 1 · free</span><b>Sign up</b></button></li>
           <li role="presentation"><button role="tab" id="jt-1" aria-controls="journey-panel" aria-selected="false" tabindex="-1" data-step="1"><span class="label">Step 2 · free</span><b>Skill score</b></button></li>
@@ -698,7 +804,7 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
       </div>
 
       <div role="tabpanel" id="who-parents" aria-labelledby="tab-parents">
-        <div class="offer-grid">
+        <div class="offer-grid" data-stagger>
           <article class="offer"><i class="swatch" style="background:var(--amber)"></i><h3>Parent evenings</h3><p>A 90-minute evening session on AI and your child's future, run for residents' associations, gated communities and parent groups. Every family gets a free skill assessment and a demo-class seat.</p></article>
           <article class="offer"><i class="swatch" style="background:var(--rust)"></i><h3>Holiday bootcamps</h3><p>Five-day camps in the winter and summer breaks, 30 seats each. Winter camp sign-ups open in late November.</p></article>
           <article class="offer"><i class="swatch" style="background:var(--teal)"></i><h3>Challenge and demo day</h3><p>A quarterly inter-school showcase where students present projects and parents see the work up close.</p></article>
@@ -710,7 +816,7 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
       </div>
 
       <div role="tabpanel" id="who-schools" aria-labelledby="tab-schools" hidden>
-        <div class="offer-grid">
+        <div class="offer-grid" data-stagger>
           <article class="offer"><i class="swatch" style="background:var(--amber)"></i><h3>School seminars</h3><p>60 minutes for students, parents and principals: a live AI demo and a skills talk. Every student gets a free LMS login and assessment link.</p></article>
           <article class="offer"><i class="swatch" style="background:var(--rust)"></i><h3>Skill Lab in a School</h3><p>Trainer-led weekly sessions inside your school on weekdays, with LMS access, assessment and certification, and a project showcase for parents.</p></article>
           <article class="offer"><i class="swatch" style="background:var(--teal)"></i><h3>Feeder partnerships</h3><p>Partner schools near the centre refer students, and their teachers can see each student's portfolio.</p></article>
@@ -718,11 +824,11 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
           <article class="offer"><i class="swatch" style="background:var(--olive)"></i><h3>School leaderboards</h3><p>Assessment results by school, so principals can see how their students compare.</p></article>
           <article class="offer"><i class="swatch" style="background:var(--amber)"></i><h3>Atal Tinkering Lab schools</h3><p>Karnataka has close to 800 Atal Tinkering Labs. We welcome ATL schools as pilot partners.</p></article>
         </div>
-        <div class="panel-foot"><p class="muted">Pilot partnerships are open to schools near Bengaluru North.</p><a class="btn btn-primary" href="#enquire" data-interest="School seminar or partnership">Book a school seminar</a></div>
+        <div class="panel-foot"><p class="muted">Pilot partnerships are open to schools near the centre.</p><a class="btn btn-primary" href="#enquire" data-interest="School seminar or partnership">Book a school seminar</a></div>
       </div>
 
       <div role="tabpanel" id="who-teachers" aria-labelledby="tab-teachers" hidden>
-        <div class="offer-grid">
+        <div class="offer-grid" data-stagger>
           <article class="offer"><p class="label">Part 1</p><h3>Concepts</h3><p>Computational thinking and AI foundations for Classes 3–8.</p></article>
           <article class="offer"><p class="label">Part 2</p><h3>Classroom practice</h3><p>Activities and AI-assisted lesson plans you can run in class.</p></article>
           <article class="offer"><p class="label">Part 3</p><h3>Assessment</h3><p>A practical project and a certificate on completion.</p></article>
@@ -731,7 +837,7 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
       </div>
 
       <div role="tabpanel" id="who-ug" aria-labelledby="tab-ug" hidden>
-        <div class="offer-grid">
+        <div class="offer-grid" data-stagger>
           <article class="offer"><i class="swatch" style="background:var(--amber)"></i><h3>Job-oriented courses</h3><p>Practical tracks in areas such as AI, coding and automation, built around skills employers ask for.</p></article>
           <article class="offer"><i class="swatch" style="background:var(--rust)"></i><h3>Global certifications</h3><p>Certification and degree-linked pathways with international technology companies, as partnerships are signed.</p></article>
           <article class="offer"><i class="swatch" style="background:var(--teal)"></i><h3>Ready for better jobs</h3><p>Real projects and a portfolio, so you can show employers what you can do. College placement cells can refer students.</p></article>
@@ -747,9 +853,9 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
       <div class="section-head reveal">
         <p class="label">Opening plan · autumn 2026</p>
         <h2 id="open-title">Six weeks to the first full quarter</h2>
-        <p class="lead">Planned dates for the Bengaluru North opening. The current week is highlighted.</p>
+        <p class="lead">Planned dates for the Bengaluru opening. The current week is highlighted.</p>
       </div>
-      <ol class="timeline" id="timeline">
+      <ol class="timeline" id="timeline" data-stagger>
         <li class="tl" data-start="2026-10-19" data-end="2026-10-25"><div class="tl-top"><span class="tl-when">19–25 Oct</span><span class="tl-state"></span></div><h3>Enquiries open</h3><p>Admissions desk and WhatsApp follow-up go live. School and society seminar slots open for booking.</p></li>
         <li class="tl" data-start="2026-10-26" data-end="2026-11-01"><div class="tl-top"><span class="tl-when">26 Oct–1 Nov</span><span class="tl-state"></span></div><h3>Seminars start</h3><p>First school and society talks. The free skill assessment drive begins and demo-class slots open.</p></li>
         <li class="tl" data-start="2026-11-02" data-end="2026-11-08"><div class="tl-top"><span class="tl-when">2–8 Nov</span><span class="tl-state"></span></div><h3>Diwali week</h3><p>Weekend demo classes at the centre. Society sessions continue around the holiday.</p></li>
@@ -768,7 +874,7 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
         <p class="label">Questions parents ask</p>
         <h2 id="faq-title">Before you visit</h2>
       </div>
-      <div class="faq">
+      <div class="faq" data-stagger>
         <details><summary>Is this tuition or coaching?</summary><p>No. VINC is a skills studio. Students learn by building projects with a mentor, and progress is shown through a portfolio and a skills report card, not marks.</p></details>
         <details><summary>Is VINC part of CBSE or NCERT?</summary><p>No. VINC is an independent provider. Building and Applied AI are our own programmes. They complement the skill education your child's school now teaches, including NCERT's Kaushal Bodh and Kaushal Vikas.</p></details>
         <details><summary>How big are the batches?</summary><p>25 students per batch. Each programme runs two weekend batches every quarter, so the centre has 100 weekend seats a quarter.</p></details>
@@ -791,10 +897,10 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
           <p class="lead">Tell us what you're interested in and we'll get back to you with a time.</p>
         </div>
         <ul class="contact-list">
-          <li><span class="label">Centre</span><span>VINC Learning Centre for Skill Education, Bengaluru North</span></li>
-          <li><span class="label">Address</span><span class="placeholder" data-contact="address">[Street address, Bengaluru North]</span></li>
+          <li><span class="label">Centre</span><span>VINC Learning Centre for Skill Education, Bengaluru</span></li>
+          <li><span class="label">Corporate office</span><address>Unit No. 2201A, 22nd Floor, World Trade Center,<br>Brigade Gateway, 26/1, Dr. Rajkumar Road,<br>Malleshwaram / Rajajinagar Extension,<br>Bengaluru, Karnataka 560055, India</address></li>
           <li><span class="label">Phone / WhatsApp</span><span class="placeholder" data-contact="phone">[Centre phone number]</span></li>
-          <li><span class="label">Email</span><span class="placeholder" data-contact="email">[Centre email address]</span></li>
+          <li><span class="label">Email</span><span class="email-row"><a href="mailto:info@vinc-lab.com" id="email-addr">info@vinc-lab.com</a><button type="button" class="copy-chip" id="copy-email">Copy</button></span></li>
           <li><span class="label">Hours</span><span>Weekdays for undergraduates and schools · weekends for Grades 6–12</span></li>
         </ul>
       </div>
@@ -853,9 +959,10 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
         <button class="btn btn-primary" type="submit" style="justify-self:start">Prepare my request <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
         <div class="done" id="done" hidden aria-live="polite">
           <strong>Your request is ready to send</strong>
-          <p class="small">Copy it and send it to the centre on WhatsApp or email, using the details on this page.</p>
+          <p class="small">Send it to us at <b>info@vinc-lab.com</b>, or copy it into WhatsApp.</p>
           <pre id="summary"></pre>
           <div class="row">
+            <a class="btn btn-primary" id="mail-link" href="mailto:info@vinc-lab.com">Open in email app</a>
             <button class="btn btn-ghost" type="button" id="copy">Copy request</button>
             <span class="small muted" id="copy-msg" aria-live="polite"></span>
           </div>
@@ -870,11 +977,30 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
     <div class="foot">
       <div style="display:grid;gap:16px">
         <blockquote>Skills students can hold, show, and build a future on.</blockquote>
-        <p>VINC · The sum of parts. Learning Centre for Skill Education, Bengaluru North. Kaushal Bodh and Kaushal Vikas are NCERT textbooks; VINC is an independent provider, not affiliated with NCERT or CBSE.</p>
+        <p>VINC · The sum of parts. Learning Centre for Skill Education, Bengaluru. Kaushal Bodh and Kaushal Vikas are NCERT textbooks; VINC is an independent provider, not affiliated with NCERT or CBSE.</p>
       </div>
       <a class="btn btn-primary" href="#enquire">Book a demo class</a>
     </div>
-    <div class="foot-parts" aria-hidden="true"><i style="background:var(--amber)"></i><i style="background:var(--rust)"></i><i style="background:var(--teal)"></i><i style="background:var(--plum)"></i></div>
+    <div class="foot-parts" id="foot-parts" aria-hidden="true"><i style="background:var(--amber)"></i><i style="background:var(--rust)"></i><i style="background:var(--teal)"></i><i style="background:var(--plum)"></i></div>
+    <div class="foot-info">
+      <div>
+        <p class="foot-head">Corporate office</p>
+        <address>Unit No. 2201A, 22nd Floor, World Trade Center, Brigade Gateway, 26/1, Dr. Rajkumar Road, Malleshwaram / Rajajinagar Extension, Bengaluru, Karnataka 560055, India</address>
+      </div>
+      <div>
+        <p class="foot-head">Email</p>
+        <a href="mailto:info@vinc-lab.com">info@vinc-lab.com</a>
+      </div>
+    </div>
+    <nav class="policies" aria-label="Company policies">
+      <a href="policies/terms.html">Terms &amp; Conditions</a>
+      <a href="policies/privacy.html">Privacy Policy</a>
+      <a href="policies/refund.html">Refund Policy</a>
+      <a href="policies/shipping.html">Shipping Policy</a>
+      <a href="policies/cookies.html">Cookie Policy</a>
+      <a href="policies/disclaimer.html">Disclaimer</a>
+    </nav>
+    <p class="copyright">© <span id="year">2026</span> VINC. All rights reserved.</p>
   </div>
 </footer>
 
@@ -886,11 +1012,24 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
   /* Contact details: fill these in before going live and the placeholders on the page are replaced. */
-  var CENTRE = { address: "", phone: "", email: "" };
+  var CENTRE = { phone: "" };
   $$("[data-contact]").forEach(function (el) {
     var v = CENTRE[el.getAttribute("data-contact")];
     if (v) { el.textContent = v; el.classList.remove("placeholder"); }
   });
+
+  var REDUCED = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  function countUp(el, to, ms) {
+    if (REDUCED) { el.textContent = to; return; }
+    var t0 = null;
+    function step(t) {
+      if (t0 === null) t0 = t;
+      var p = Math.min(1, (t - t0) / ms);
+      el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
 
   /* Mobile nav */
   var menuBtn = $("#menu-btn"), nav = $("#nav");
@@ -905,6 +1044,11 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
     });
   });
 
+  /* Header lifts once the page scrolls */
+  var header = $(".site-header");
+  function onScroll() { header.classList.toggle("scrolled", window.scrollY > 8); }
+  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
   /* Scroll spy */
   var navLinks = $$('.nav a[href^="#"]:not(.btn)');
   if ("IntersectionObserver" in window) {
@@ -918,11 +1062,29 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
 
     /* Reveal: content is visible at rest; only elements below the fold get a one-time lift. */
     var rev = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.remove("pre"); rev.unobserve(e.target); } });
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var t = e.target; t.classList.remove("pre"); rev.unobserve(t);
+        t.addEventListener("transitionend", function h(ev) { if (ev.target !== t) return; t.classList.remove("reveal"); t.removeEventListener("transitionend", h); });
+      });
     }, { rootMargin: "0px 0px -8% 0px" });
-    $$(".reveal").forEach(function (el) {
-      if (el.getBoundingClientRect().top > window.innerHeight) { el.classList.add("pre"); rev.observe(el); }
+    var targets = $$(".reveal");
+    $$("[data-stagger]").forEach(function (g) {
+      Array.prototype.forEach.call(g.children, function (c, i) { c.style.setProperty("--d", (i % 6) * 80 + "ms"); c.classList.add("reveal"); targets.push(c); });
     });
+    targets.forEach(function (el) {
+      if (!REDUCED && el.getBoundingClientRect().top > window.innerHeight) { el.classList.add("pre"); rev.observe(el); }
+    });
+
+    /* One-shot moments when a block first scrolls into view */
+    var once = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add("go"); once.unobserve(e.target);
+        if (e.target.id === "seat-board") countUp($("#seat-count"), 100, 1100);
+      });
+    }, { threshold: 0.35 });
+    ["#seat-board", ".vocab", "#foot-parts"].forEach(function (q) { var el = $(q); if (el) once.observe(el); });
   }
 
   /* Hero parts */
@@ -962,6 +1124,7 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
       btn.setAttribute("aria-pressed", "true");
       progWrap.classList.add("has-pick");
       var match = $$(".programme").filter(function (p) { return g >= +p.dataset.min && g <= +p.dataset.max; })[0];
+      void match.offsetWidth;
       match.classList.add("is-match");
       var name = match.querySelector("h3").textContent;
       gradeResult.textContent = "Grade " + g + " joins " + name + ". " + (g <= 8 ? "Applied AI follows from Grade 9." : "Students who did Building can step straight into it.");
@@ -986,7 +1149,8 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
   var board = $("#seat-board"), seatCount = $("#seat-count"), seatLabel = $("#seat-label");
   $$(".batch", board).forEach(function (b) {
     var dots = $(".dots", b);
-    for (var i = 0; i < 25; i++) dots.appendChild(document.createElement("i"));
+    var bi = $$(".batch", board).indexOf(b);
+    for (var i = 0; i < 25; i++) { var dot = document.createElement("i"); dot.style.setProperty("--n", bi * 25 + i); dots.appendChild(dot); }
     function on() {
       board.classList.add("has-focus"); $$(".batch", board).forEach(function (x) { x.classList.remove("is-focus"); }); b.classList.add("is-focus");
       seatCount.textContent = "25"; seatLabel.textContent = "seats in " + $(".batch-name", b).textContent;
@@ -1013,6 +1177,8 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
     var pill = $("#j-pill"); pill.textContent = s.pill; pill.classList.toggle("paid", s.pill !== "Free");
     $("#j-title").textContent = s.title; $("#j-body").textContent = s.body; $("#j-extra").textContent = s.extra;
     $("#j-prev").disabled = i === 0;
+    $("#journey-bar").style.width = ((i + 1) / STEPS.length * 100) + "%";
+    var jp = $("#journey-panel"); jp.classList.remove("swap"); void jp.offsetWidth; jp.classList.add("swap");
     $("#j-next").textContent = i === STEPS.length - 1 ? "Book a demo class" : "Next step";
   }
   jTabs.forEach(function (t, k) {
@@ -1079,16 +1245,24 @@ footer { background: var(--band); color: var(--on-band); padding-block: 48px 40p
       check("interest", interest.value !== "", "Choose what you'd like to book or ask about.")
     ].every(Boolean);
     if (!ok) { var bad = $(".field.invalid input, .field.invalid select", form); if (bad) bad.focus(); return; }
-    var lines = ["VINC Bengaluru North enquiry", "Name: " + name, "Phone: " + phone, "Interested in: " + interest.value];
+    var lines = ["VINC Bengaluru enquiry", "Name: " + name, "Phone: " + phone, "Interested in: " + interest.value];
     if (!childRow.hidden) {
       if ($("#grade").value) lines.push("Child's grade: " + $("#grade").value);
       if ($("#day").value) lines.push("Preferred day: " + $("#day").value);
     }
     var msg = $("#msg").value.trim(); if (msg) lines.push("Note: " + msg);
     $("#summary").textContent = lines.join("\n");
+    $("#mail-link").href = "mailto:info@vinc-lab.com?subject=" + encodeURIComponent("Enquiry: " + interest.value) + "&body=" + encodeURIComponent(lines.join("\n"));
     $("#done").hidden = false; $("#copy-msg").textContent = "";
     $("#done").scrollIntoView({ block: "nearest" });
   });
+  $("#copy-email").addEventListener("click", function () {
+    var btn = this;
+    function done(t) { btn.textContent = t; setTimeout(function () { btn.textContent = "Copy"; }, 1800); }
+    function sel() { var r = document.createRange(); r.selectNodeContents($("#email-addr")); var w = window.getSelection(); w.removeAllRanges(); w.addRange(r); done("Selected"); }
+    try { navigator.clipboard.writeText("info@vinc-lab.com").then(function () { done("Copied"); }, sel); } catch (err) { sel(); }
+  });
+  $("#year").textContent = new Date().getFullYear();
   $("#copy").addEventListener("click", function () {
     var text = $("#summary").textContent, out = $("#copy-msg");
     function fallback() {

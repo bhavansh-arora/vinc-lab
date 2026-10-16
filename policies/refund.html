@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VINC Refund Policy</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="icon" href="../assets/logo-light.png" type="image/png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400..800&family=Lora:wght@500..700&display=swap">
+<style>
+:root {
+  --paper: #F7F0E3; --card: #FFF9EF; --ink: #2B1A10; --ink-2: #5E4634; --muted: #6E5442; --line: #DCCBAE;
+  --amber: #D98A1C; --amber-ink: #9A5B0A; --on-amber: #2B1A10; --focus: #1F6F66;
+  --logo-light: inline-block; --logo-dark: none;
+  --display: "Lora", Georgia, serif; --body: "DM Sans", "Segoe UI", Arial, sans-serif; --mono: "DM Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --paper: #1B130D; --card: #2B1F16; --ink: #F4EADB; --ink-2: #DCCAB1; --muted: #BBA58B; --line: #47352A; --amber: #E09A35; --amber-ink: #F0B44C; --focus: #F0B44C; --logo-light: none; --logo-dark: inline-block; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --paper: #1B130D; --card: #2B1F16; --ink: #F4EADB; --ink-2: #DCCAB1; --muted: #BBA58B; --line: #47352A; --amber: #E09A35; --amber-ink: #F0B44C; --focus: #F0B44C; --logo-light: none; --logo-dark: inline-block; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 1.0625rem; line-height: 1.65; }
+.wrap { max-width: 760px; margin-inline: auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header { border-bottom: 1px solid var(--line); }
+header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 68px; }
+header img { height: 36px; width: auto; }
+.logo-l { display: var(--logo-light); } .logo-d { display: var(--logo-dark); }
+a { color: inherit; }
+.back { font-weight: 700; text-decoration: none; }
+main { padding-block: clamp(40px, 7vw, 80px); display: grid; gap: 18px; }
+.label { font-family: var(--mono); font-size: .8125rem; letter-spacing: .12em; text-transform: uppercase; color: var(--amber-ink); margin: 0; }
+h1 { font-family: var(--display); font-weight: 600; font-size: clamp(2.25rem, 1.6rem + 3vw, 3.25rem); line-height: 1.1; margin: 0; text-wrap: balance; }
+p { margin: 0; color: var(--ink-2); max-width: 65ch; }
+.note { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px 22px; display: grid; gap: 10px; }
+address { font-style: normal; color: var(--ink-2); }
+nav { display: flex; flex-wrap: wrap; gap: 8px 20px; padding-top: 22px; margin-top: 10px; border-top: 1px solid var(--line); font-size: .9375rem; }
+nav a { text-decoration: none; color: var(--muted); }
+nav a:hover, nav a[aria-current="page"] { color: var(--ink); text-decoration: underline; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 6px; }
+footer { padding-block: 0 48px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a href="../index.html" aria-label="VINC home"><img class="logo-l" src="../assets/logo-light.png" alt="VINC, the sum of parts" width="104" height="36"><img class="logo-d" src="../assets/logo-dark.png" alt="VINC, the sum of parts" width="104" height="36"></a>
+    <a class="back" href="../index.html">← Back to the website</a>
+  </div>
+</header>
+<main class="wrap">
+  <p class="label">Company policy</p>
+  <h1>Refund Policy</h1>
+  <p>This page will set out when and how programme fees can be refunded.</p>
+  
+  <div class="note">
+    <p><strong>This policy is being finalised</strong> and will be published here before admissions open. For any question about it in the meantime, write to <a href="mailto:info@vinc-lab.com">info@vinc-lab.com</a>.</p>
+    <address>VINC · Unit No. 2201A, 22nd Floor, World Trade Center, Brigade Gateway, 26/1, Dr. Rajkumar Road, Malleshwaram / Rajajinagar Extension, Bengaluru, Karnataka 560055, India</address>
+  </div>
+</main>
+<footer class="wrap">
+  <nav aria-label="Company policies">
+      <a href="terms.html">Terms &amp; Conditions</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="refund.html" aria-current="page">Refund Policy</a>
+      <a href="shipping.html">Shipping Policy</a>
+      <a href="cookies.html">Cookie Policy</a>
+      <a href="disclaimer.html">Disclaimer</a>
+  </nav>
+</footer>
+</body>
+</html>
