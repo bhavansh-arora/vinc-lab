@@ -641,7 +641,7 @@ address { font-style: normal; }
 .pd-mic { fill: none; stroke: #2B1A10; stroke-width: 2; stroke-linecap: round; }
 .pd-click { fill: var(--amber); animation: pd-click 4s linear infinite; }
 .pd-kid { transform-origin: 136px 152px; animation: pd-lean 4s ease-in-out infinite; }
-.pd-head { transform-origin: 136px 96px; animation: pd-nod 4s ease-in-out infinite; }
+.pd-head { transform-origin: 136px 103px; animation: pd-nod 4s ease-in-out infinite; }
 .pd-eyes { transform-origin: 136px 79.5px; animation: eyes 4.5s ease-in-out infinite; }
 .pd-gesture { transform-origin: 158px 116px; animation: pd-gesture 4s ease-in-out infinite; }
 .pd-palm { animation: pd-palm 4s ease-in-out infinite; }
@@ -1062,19 +1062,21 @@ address { font-style: normal; }
             </g>
             <!-- presenter behind the lectern -->
             <g class="pd-kid">
-              <rect x="130" y="94" width="12" height="16" rx="4" class="pd-shade"/>
+              <rect x="129.5" y="95" width="13" height="16" rx="4" class="pd-shade"/>
               <path d="M112 113 Q136 104 160 113 L163 152 H109 Z" class="pd-jacket"/>
               <path d="M128 108 L136 128 L144 108 Z" class="f-rust"/>
               <path d="M128 108 L133 130 M144 108 L139 130" class="pd-lapel"/>
               <g class="pd-head">
-                <ellipse cx="122.5" cy="80" rx="2.8" ry="4.2" class="pd-shade"/><ellipse cx="149.5" cy="80" rx="2.8" ry="4.2" class="pd-shade"/>
-                <ellipse cx="136" cy="79" rx="13.5" ry="15" class="pd-skin"/>
-                <path d="M122.5 77 C 121 61, 133 57, 140 58 C 149 59, 153 66, 150.5 77 C 147 71, 141 68, 134 69 C 129 70, 125 72, 122.5 77 Z" class="pd-hair"/>
-                <path d="M128.5 73.6 Q 131 72.6 133.4 73.6 M 138.6 73.6 Q 141 72.6 143.5 73.6" class="pd-brow"/>
-                <g class="pd-eyes"><circle cx="131" cy="79.5" r="1.8" class="pd-hair"/><circle cx="141" cy="79.5" r="1.8" class="pd-hair"/></g>
-                <path d="M136 81.5 Q 137.8 85 135.6 86" class="pd-nose"/>
-                <circle cx="128" cy="85.5" r="2.3" class="pd-cheek"/><circle cx="144" cy="85.5" r="2.3" class="pd-cheek"/>
-                <path d="M131 88.5 Q 136 94 141 88.5 Z" class="pd-mouth"/>
+                <g transform="translate(136 85.5) scale(1.07) translate(-136 -79)">
+                  <ellipse cx="122.5" cy="80" rx="2.8" ry="4.2" class="pd-shade"/><ellipse cx="149.5" cy="80" rx="2.8" ry="4.2" class="pd-shade"/>
+                  <ellipse cx="136" cy="79" rx="13.5" ry="15" class="pd-skin"/>
+                  <path d="M122.5 77 C 121 61, 133 57, 140 58 C 149 59, 153 66, 150.5 77 C 147 71, 141 68, 134 69 C 129 70, 125 72, 122.5 77 Z" class="pd-hair"/>
+                  <path d="M128.5 73.6 Q 131 72.6 133.4 73.6 M 138.6 73.6 Q 141 72.6 143.5 73.6" class="pd-brow"/>
+                  <g class="pd-eyes"><circle cx="131" cy="79.5" r="1.8" class="pd-hair"/><circle cx="141" cy="79.5" r="1.8" class="pd-hair"/></g>
+                  <path d="M136 81.5 Q 137.8 85 135.6 86" class="pd-nose"/>
+                  <circle cx="128" cy="85.5" r="2.3" class="pd-cheek"/><circle cx="144" cy="85.5" r="2.3" class="pd-cheek"/>
+                  <path d="M131 88.5 Q 136 94 141 88.5 Z" class="pd-mouth"/>
+                </g>
               </g>
             </g>
             <g class="pd-gesture">
