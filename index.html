@@ -346,6 +346,9 @@ form.card { background: var(--card); border: 1px solid var(--line); border-radiu
 .error { color: var(--rust); font-size: var(--t-small); font-weight: 600; min-height: 1.2em; }
 .field.invalid input, .field.invalid select { border-color: var(--rust); }
 .done { background: var(--paper-2); border-radius: 16px; padding: 18px; display: grid; gap: 10px; }
+.honey { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.sent { background: color-mix(in srgb, var(--teal) 14%, var(--card)); border: 1px solid var(--teal); border-radius: 16px; padding: 18px; display: grid; gap: 6px; animation: fade-up .45s ease backwards; }
+.btn[disabled] { opacity: .6; cursor: progress; transform: none; }
 .done pre { margin: 0; white-space: pre-wrap; font-family: var(--mono); font-size: var(--t-small); background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px; overflow-x: auto; }
 .done .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 
@@ -856,7 +859,7 @@ address { font-style: normal; }
         <p class="lead">Planned dates for the Bengaluru opening. The current week is highlighted.</p>
       </div>
       <ol class="timeline" id="timeline" data-stagger>
-        <li class="tl" data-start="2026-10-19" data-end="2026-10-25"><div class="tl-top"><span class="tl-when">19–25 Oct</span><span class="tl-state"></span></div><h3>Enquiries open</h3><p>Admissions desk and WhatsApp follow-up go live. School and society seminar slots open for booking.</p></li>
+        <li class="tl" data-start="2026-10-19" data-end="2026-10-25"><div class="tl-top"><span class="tl-when">19–25 Oct</span><span class="tl-state"></span></div><h3>Enquiries open</h3><p>The admissions desk opens for enquiries. School and society seminar slots open for booking.</p></li>
         <li class="tl" data-start="2026-10-26" data-end="2026-11-01"><div class="tl-top"><span class="tl-when">26 Oct–1 Nov</span><span class="tl-state"></span></div><h3>Seminars start</h3><p>First school and society talks. The free skill assessment drive begins and demo-class slots open.</p></li>
         <li class="tl" data-start="2026-11-02" data-end="2026-11-08"><div class="tl-top"><span class="tl-when">2–8 Nov</span><span class="tl-state"></span></div><h3>Diwali week</h3><p>Weekend demo classes at the centre. Society sessions continue around the holiday.</p></li>
         <li class="tl" data-start="2026-11-09" data-end="2026-11-15"><div class="tl-top"><span class="tl-when">9–15 Nov</span><span class="tl-state"></span></div><h3>Launch week</h3><p>Open house at the centre, with demo classes all week.</p></li>
@@ -898,8 +901,7 @@ address { font-style: normal; }
         </div>
         <ul class="contact-list">
           <li><span class="label">Centre</span><span>VINC Learning Centre for Skill Education, Bengaluru</span></li>
-          <li><span class="label">Corporate office</span><address>Unit No. 2201A, 22nd Floor, World Trade Center,<br>Brigade Gateway, 26/1, Dr. Rajkumar Road,<br>Malleshwaram / Rajajinagar Extension,<br>Bengaluru, Karnataka 560055, India</address></li>
-          <li><span class="label">Phone / WhatsApp</span><span class="placeholder" data-contact="phone">[Centre phone number]</span></li>
+          <li><span class="label">Corporate office</span><address><strong>VINC DEEPTECH PVT. LTD.</strong><br>Unit No. 2201A, 22nd Floor, World Trade Center,<br>Brigade Gateway, 26/1, Dr. Rajkumar Road,<br>Malleshwaram / Rajajinagar Extension,<br>Bengaluru, Karnataka 560055, India</address></li>
           <li><span class="label">Email</span><span class="email-row"><a href="mailto:info@vinc-lab.com" id="email-addr">info@vinc-lab.com</a><button type="button" class="copy-chip" id="copy-email">Copy</button></span></li>
           <li><span class="label">Hours</span><span>Weekdays for undergraduates and schools · weekends for Grades 6–12</span></li>
         </ul>
@@ -913,7 +915,7 @@ address { font-style: normal; }
             <span class="error" id="name-err"></span>
           </div>
           <div class="field" id="f-phone">
-            <label for="phone">Phone or WhatsApp</label>
+            <label for="phone">Your phone</label>
             <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+91" required>
             <span class="error" id="phone-err"></span>
           </div>
@@ -952,17 +954,27 @@ address { font-style: normal; }
             </select>
           </div>
         </div>
+        <div class="field" id="f-email">
+          <label for="email">Your email <span class="muted">(optional)</span></label>
+          <input id="email" name="email" type="email" autocomplete="email">
+          <span class="error" id="email-err"></span>
+        </div>
         <div class="field">
           <label for="msg">Anything else? <span class="muted">(optional)</span></label>
           <textarea id="msg" name="msg" placeholder="School name, society name, questions…"></textarea>
         </div>
-        <button class="btn btn-primary" type="submit" style="justify-self:start">Prepare my request <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <input type="text" name="_honey" id="honey" tabindex="-1" autocomplete="off" aria-hidden="true" class="honey">
+        <button class="btn btn-primary" type="submit" id="send" style="justify-self:start">Send my request <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <div class="sent" id="sent" hidden role="status">
+          <strong>Thank you, we've received your request</strong>
+          <p class="small">We'll get back to you soon to fix a time.</p>
+        </div>
         <div class="done" id="done" hidden aria-live="polite">
-          <strong>Your request is ready to send</strong>
-          <p class="small">Send it to us at <b>info@vinc-lab.com</b>, or copy it into WhatsApp.</p>
+          <strong>Your request didn't go through</strong>
+          <p class="small">Send it by email instead, or copy it and write to us at <b>info@vinc-lab.com</b>.</p>
           <pre id="summary"></pre>
           <div class="row">
-            <a class="btn btn-primary" id="mail-link" href="mailto:info@vinc-lab.com">Open in email app</a>
+            <a class="btn btn-primary" id="mail-link" href="mailto:vincdeeptech@gmail.com">Send by email</a>
             <button class="btn btn-ghost" type="button" id="copy">Copy request</button>
             <span class="small muted" id="copy-msg" aria-live="polite"></span>
           </div>
@@ -975,17 +987,14 @@ address { font-style: normal; }
 <footer>
   <div class="wrap">
     <div class="foot">
-      <div style="display:grid;gap:16px">
-        <blockquote>Skills students can hold, show, and build a future on.</blockquote>
-        <p>VINC · The sum of parts. Learning Centre for Skill Education, Bengaluru. Kaushal Bodh and Kaushal Vikas are NCERT textbooks; VINC is an independent provider, not affiliated with NCERT or CBSE.</p>
-      </div>
+      <blockquote>Skills students can hold, show, and build a future on.</blockquote>
       <a class="btn btn-primary" href="#enquire">Book a demo class</a>
     </div>
     <div class="foot-parts" id="foot-parts" aria-hidden="true"><i style="background:var(--amber)"></i><i style="background:var(--rust)"></i><i style="background:var(--teal)"></i><i style="background:var(--plum)"></i></div>
     <div class="foot-info">
       <div>
         <p class="foot-head">Corporate office</p>
-        <address>Unit No. 2201A, 22nd Floor, World Trade Center, Brigade Gateway, 26/1, Dr. Rajkumar Road, Malleshwaram / Rajajinagar Extension, Bengaluru, Karnataka 560055, India</address>
+        <address><strong>VINC DEEPTECH PVT. LTD.</strong><br>Unit No. 2201A, 22nd Floor, World Trade Center, Brigade Gateway, 26/1, Dr. Rajkumar Road, Malleshwaram / Rajajinagar Extension, Bengaluru, Karnataka 560055, India</address>
       </div>
       <div>
         <p class="foot-head">Email</p>
@@ -1000,7 +1009,7 @@ address { font-style: normal; }
       <a href="policies/cookies.html">Cookie Policy</a>
       <a href="policies/disclaimer.html">Disclaimer</a>
     </nav>
-    <p class="copyright">© <span id="year">2026</span> VINC. All rights reserved.</p>
+    <p class="copyright">© <span id="year">2026</span> VINC DEEPTECH PVT. LTD. All rights reserved.</p>
   </div>
 </footer>
 
@@ -1011,12 +1020,8 @@ address { font-style: normal; }
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
-  /* Contact details: fill these in before going live and the placeholders on the page are replaced. */
-  var CENTRE = { phone: "" };
-  $$("[data-contact]").forEach(function (el) {
-    var v = CENTRE[el.getAttribute("data-contact")];
-    if (v) { el.textContent = v; el.classList.remove("placeholder"); }
-  });
+  /* Enquiries are delivered by FormSubmit to this inbox. */
+  var LEADS_INBOX = "vincdeeptech@gmail.com";
 
   var REDUCED = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   function countUp(el, to, ms) {
@@ -1237,24 +1242,54 @@ address { font-style: normal; }
   }
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    var name = $("#name").value.trim(), phone = $("#phone").value.trim();
+    var name = $("#name").value.trim(), phone = $("#phone").value.trim(), email = $("#email").value.trim();
     var digits = phone.replace(/\D/g, "");
     var ok = [
       check("name", name.length > 1, "Enter your name so we know who to ask for."),
       check("phone", digits.length >= 10 && digits.length <= 13, "Enter a 10-digit mobile number, with or without +91."),
+      check("email", email === "" || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email), "Check the email address, or leave it empty."),
       check("interest", interest.value !== "", "Choose what you'd like to book or ask about.")
     ].every(Boolean);
     if (!ok) { var bad = $(".field.invalid input, .field.invalid select", form); if (bad) bad.focus(); return; }
-    var lines = ["VINC Bengaluru enquiry", "Name: " + name, "Phone: " + phone, "Interested in: " + interest.value];
+    var lines = ["VINC Bengaluru enquiry", "Name: " + name, "Phone: " + phone];
+    if (email) lines.push("Email: " + email);
+    lines.push("Interested in: " + interest.value);
     if (!childRow.hidden) {
       if ($("#grade").value) lines.push("Child's grade: " + $("#grade").value);
       if ($("#day").value) lines.push("Preferred day: " + $("#day").value);
     }
     var msg = $("#msg").value.trim(); if (msg) lines.push("Note: " + msg);
     $("#summary").textContent = lines.join("\n");
-    $("#mail-link").href = "mailto:info@vinc-lab.com?subject=" + encodeURIComponent("Enquiry: " + interest.value) + "&body=" + encodeURIComponent(lines.join("\n"));
-    $("#done").hidden = false; $("#copy-msg").textContent = "";
-    $("#done").scrollIntoView({ block: "nearest" });
+    $("#mail-link").href = "mailto:" + LEADS_INBOX + "?subject=" + encodeURIComponent("Enquiry: " + interest.value) + "&body=" + encodeURIComponent(lines.join("\n"));
+    if ($("#honey").value) return;
+
+    var payload = {
+      _subject: "VINC enquiry: " + interest.value + " (" + name + ")",
+      _template: "table", _captcha: "false",
+      Name: name, Phone: phone, Email: email || "-", "Interested in": interest.value,
+      "Child's grade": (!childRow.hidden && $("#grade").value) || "-",
+      "Preferred day": (!childRow.hidden && $("#day").value) || "-",
+      Note: msg || "-", Page: location.href
+    };
+    if (email) payload._replyto = email;
+    var send = $("#send"), label = send.innerHTML;
+    send.disabled = true; send.textContent = "Sending…";
+    $("#sent").hidden = true; $("#done").hidden = true;
+    function failed() {
+      $("#done").hidden = false; $("#copy-msg").textContent = "";
+      $("#done").scrollIntoView({ block: "nearest" });
+    }
+    fetch("https://formsubmit.co/ajax/" + LEADS_INBOX, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(payload)
+    }).then(function (r) { return r.json().then(function (d) { return r.ok && String(d.success) === "true"; }); })
+      .then(function (ok) {
+        if (!ok) return failed();
+        form.reset(); syncChild();
+        $("#sent").hidden = false; $("#sent").scrollIntoView({ block: "nearest" });
+      }, failed)
+      .then(function () { send.disabled = false; send.innerHTML = label; });
   });
   $("#copy-email").addEventListener("click", function () {
     var btn = this;

@@ -19,8 +19,9 @@ company policy pages linked from the footer.
 - **Free start**: a four-step walkthrough (sign up, skill score, demo class, enrol).
 - **Who the centre serves**: tabs for parents, schools, teachers and undergraduates.
 - **Opening plan**: marks the current and next week from today's date.
-- **Enquiry form**: validates the visitor's details and builds a request they can
-  copy or open in their email app, addressed to info@vinc-lab.com.
+- **Enquiry form**: validates the visitor's details and sends them to
+  vincdeeptech@gmail.com through [FormSubmit](https://formsubmit.co). If the
+  send fails, the visitor can email or copy the request instead.
 
 ## Motion
 
@@ -32,12 +33,13 @@ who set "reduce motion" on their device get a still page.
 
 ## Before going live
 
-- **Phone number**: fill in `CENTRE.phone` at the top of the script in
-  `index.html`. Until then the page shows a bracketed placeholder.
+- **Activate the enquiry inbox**: the first enquiry sent from the live site makes
+  FormSubmit email vincdeeptech@gmail.com an activation link. Click it once, and
+  every later enquiry arrives as an email. FormSubmit then offers a random alias
+  you can put in `LEADS_INBOX` (top of the script in `index.html`) so the Gmail
+  address no longer appears in the page source.
 - **Policies**: each page in `policies/` says the policy is being finalised.
   Replace that text with the approved policy wording.
-- **Enquiry form**: it prepares a request for the visitor to copy. To collect
-  requests directly, point the submit handler at a form service or CRM webhook.
 - **Opening dates**: the timeline uses the planned 19 Oct – 29 Nov 2026 sprint
   dates. Edit the `data-start` / `data-end` values if they change.
 
