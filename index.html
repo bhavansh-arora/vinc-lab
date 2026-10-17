@@ -39,6 +39,7 @@
   --shadow: 0 14px 34px -18px rgba(43, 26, 16, 0.45);
   --glow: rgba(217, 138, 28, 0.16);
   --orb: 0.32;
+  --dot: rgba(43, 26, 16, 0.09);
 
   --display: "Lora", Georgia, "Times New Roman", serif;
   --body: "DM Sans", "Segoe UI", Arial, sans-serif;
@@ -61,7 +62,7 @@
     --line: #47352A; --grid: rgba(244, 234, 219, 0.05); --amber: #E09A35; --amber-ink: #F0B44C; --rust: #CC5C35;
     --teal: #2A8378; --plum: #A4466E; --olive: #5D8A30; --on-part: #FFF7EA; --on-amber: #2B1A10;
     --band: #F4EADB; --on-band: #2B1A10; --band-accent: #9A5B0A; --focus: #F0B44C;
-    --logo-light: none; --logo-dark: inline-block; --shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.7); --glow: rgba(240, 180, 76, 0.12); --orb: 0.2; color-scheme: dark;
+    --logo-light: none; --logo-dark: inline-block; --shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.7); --glow: rgba(240, 180, 76, 0.12); --orb: 0.2; --dot: rgba(244, 234, 219, 0.06); color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
@@ -69,7 +70,7 @@
   --line: #47352A; --grid: rgba(244, 234, 219, 0.05); --amber: #E09A35; --amber-ink: #F0B44C; --rust: #CC5C35;
   --teal: #2A8378; --plum: #A4466E; --olive: #5D8A30; --on-part: #FFF7EA; --on-amber: #2B1A10;
   --band: #F4EADB; --on-band: #2B1A10; --band-accent: #9A5B0A; --focus: #F0B44C;
-  --logo-light: none; --logo-dark: inline-block; --shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.7); --glow: rgba(240, 180, 76, 0.12); --orb: 0.2; color-scheme: dark;
+  --logo-light: none; --logo-dark: inline-block; --shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.7); --glow: rgba(240, 180, 76, 0.12); --orb: 0.2; --dot: rgba(244, 234, 219, 0.06); color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -146,7 +147,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 /* Sections */
 section { padding-block: clamp(56px, 8vw, 104px); }
-.band-alt { background: color-mix(in srgb, var(--paper-2) 90%, transparent); }
+.band-alt { background: var(--paper-2); }
 .section-head { display: grid; gap: 14px; margin-bottom: clamp(28px, 4vw, 48px); max-width: 760px; }
 
 /* Hero */
@@ -254,18 +255,48 @@ section { padding-block: clamp(56px, 8vw, 104px); }
 
 /* Quarter seats */
 .quarter-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 56px); align-items: start; }
-.seat-board { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; display: grid; gap: 18px; }
-.batches { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.batch { display: grid; gap: 8px; background: none; border: 0; padding: 0; text-align: left; cursor: pointer; }
-.batch-name { font-size: var(--t-small); font-weight: 700; }
-.dots { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; max-width: 150px; }
-.dots i { aspect-ratio: 1; border-radius: 50%; display: block; transition: transform .2s ease, opacity .2s ease; }
-.batch.b .dots i { background: var(--olive); }
-.batch.a .dots i { background: var(--teal); }
-.seat-board.has-focus .batch:not(.is-focus) .dots i { opacity: .25; }
-.seat-board.has-focus .batch.is-focus .dots i { transform: scale(1.12); }
-.seat-total { display: flex; align-items: baseline; gap: 12px; border-top: 1px solid var(--line); padding-top: 14px; }
-.seat-total b { font-family: var(--display); font-size: 2.5rem; line-height: 1; font-variant-numeric: tabular-nums; }
+/* Seat picker: each batch is a cabin of 25 seats, five rows with an aisle, like choosing a seat on a flight */
+.seat-board { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; display: grid; gap: 16px; }
+.sb-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; }
+.sb-open { font-size: var(--t-small); color: var(--ink-2); }
+.sb-open b { font-family: var(--display); font-size: 1.5rem; color: var(--ink); font-variant-numeric: tabular-nums; }
+.batch-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.bt { --k: var(--olive); display: grid; gap: 0; text-align: left; padding: 9px 14px; border-radius: 14px; border: 2px solid var(--line); background: var(--paper); cursor: pointer; transition: background-color .2s ease, border-color .2s ease, transform .15s ease; }
+.bt.a { --k: var(--teal); }
+.bt span { font-size: .8125rem; color: var(--muted); }
+.bt b { font-size: 1rem; }
+.bt:hover { border-color: var(--k); }
+.bt[aria-selected="true"] { background: var(--k); border-color: var(--k); color: var(--on-part); }
+.bt[aria-selected="true"] span { color: inherit; opacity: .85; }
+.cabin { --seat: var(--olive); justify-self: center; display: grid; justify-items: center; gap: 8px; padding: 44px 22px 16px; max-width: 100%;
+  background: var(--paper); border: 2px solid var(--line); border-radius: 140px 140px 26px 26px / 70px 70px 26px 26px; }
+.cabin[data-kind="a"] { --seat: var(--teal); }
+.cabin-front { font-family: var(--mono); font-size: .6875rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-top: -26px; margin-bottom: 4px; }
+.seat-cols, .seat-row { display: grid; grid-template-columns: 22px 38px 38px 14px 38px 38px 38px; gap: 8px; align-items: center; }
+.seat-cols span, .row-n { font-family: var(--mono); font-size: .75rem; color: var(--muted); text-align: center; }
+.seat-grid { display: grid; gap: 8px; }
+.seat { position: relative; width: 38px; height: 38px; padding: 0; border: 2px solid var(--seat); background: var(--card); border-radius: 11px 11px 6px 6px; cursor: pointer; transition: transform .15s ease, background-color .15s ease; }
+.seat::before { content: ""; position: absolute; left: 6px; right: 6px; top: 5px; height: 5px; border-radius: 3px; background: var(--seat); opacity: .35; }
+.seat:hover { transform: translateY(-2px); background: color-mix(in srgb, var(--seat) 16%, var(--card)); }
+.seat[aria-pressed="true"] { background: var(--seat); }
+.seat[aria-pressed="true"]::before { opacity: 0; }
+.seat[aria-pressed="true"]::after { content: ""; position: absolute; left: 50%; top: 45%; width: 8px; height: 14px; border: solid var(--on-part); border-width: 0 3px 3px 0; transform: translate(-50%, -50%) rotate(45deg); }
+.legend { display: flex; gap: 16px; font-size: .8125rem; color: var(--muted); margin-top: 6px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.lg { width: 14px; height: 14px; border-radius: 4px 4px 2px 2px; border: 2px solid var(--seat); background: var(--card); display: inline-block; }
+.lg.pick { background: var(--seat); }
+.pass { border: 2px dashed var(--line); border-radius: 16px; padding: 14px 16px; display: grid; gap: 10px; }
+.pass-main { display: grid; grid-template-columns: 1.4fr .8fr .8fr; gap: 8px; }
+.pass-main div { display: grid; min-width: 0; }
+.pass-main .label { color: var(--muted); font-size: .6875rem; }
+.pass-main b { font-family: var(--display); font-size: 1.35rem; line-height: 1.2; }
+.pass.bump { animation: match .45s ease; }
+.pass .btn { justify-self: start; }
+.pass .btn[disabled] { cursor: not-allowed; }
+@keyframes seat-pop { from { transform: scale(0); } 70% { transform: scale(1.15); } to { transform: scale(1); } }
+@keyframes seat-pop2 { from { transform: scale(0); } 70% { transform: scale(1.15); } to { transform: scale(1); } }
+.seat-board.go .seat { animation: seat-pop .4s cubic-bezier(.2, .9, .3, 1.3) backwards; animation-delay: calc(var(--n) * 18ms); }
+.cabin.go2 .seat { animation: seat-pop2 .35s cubic-bezier(.2, .9, .3, 1.3) backwards; animation-delay: calc(var(--n) * 12ms); }
 .steps { list-style: none; padding: 0; display: grid; gap: 14px; counter-reset: step; }
 .steps li { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 16px; align-items: start; }
 .steps li::before {
@@ -437,11 +468,9 @@ address { font-style: normal; }
 [role="tabpanel"]:not([hidden]) .offer { animation: fade-up .5s ease backwards; animation-delay: calc(var(--i, 0) * 60ms); }
 
 /* Seat board: the 100 seats fill in one by one */
-.seat-board.go .dots i { animation: dot-pop .45s cubic-bezier(.2, .9, .3, 1.3) backwards; animation-delay: calc(var(--n) * 9ms); }
 
 /* Background: a slow circuit-like network on a fixed canvas behind the page, plus colour orbs in the hero */
-#bg-canvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-main, footer { position: relative; z-index: 1; }
+#bg-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 @keyframes orb-a { to { transform: translate(-140px, 110px) scale(1.15); } }
 @keyframes orb-b { to { transform: translate(170px, -90px) scale(.9); } }
 .hero { position: relative; overflow: clip; }
@@ -484,6 +513,80 @@ main, footer { position: relative; z-index: 1; }
   font-family: var(--display); font-style: italic; font-weight: 500; font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem); }
 .ticker span::after { content: ""; width: 11px; height: 11px; border-radius: 3px; transform: rotate(45deg); background: var(--c, var(--amber)); }
 .ticker span:nth-child(4n+2) { --c: var(--rust); } .ticker span:nth-child(4n+3) { --c: var(--teal); } .ticker span:nth-child(4n) { --c: var(--plum); }
+
+/* Section companions: small machines in the free space beside the content, each on a slow loop */
+.deco-host { position: relative; overflow: clip; }
+.deco-host > .wrap { position: relative; z-index: 1; }
+.deco { position: absolute; pointer-events: none; z-index: 0; }
+.f-ink { fill: var(--ink); } .f-amber { fill: var(--amber); } .f-rust { fill: var(--rust); } .f-teal { fill: var(--teal); } .f-paper { fill: var(--paper); }
+.s-ink { stroke: var(--ink); stroke-width: 3; stroke-linecap: round; fill: none; } .s-paper { stroke: var(--paper); stroke-width: 1.5; fill: none; }
+.dashed { stroke-width: 2; stroke-dasharray: 3 4; }
+@keyframes blink { 50% { opacity: .2; } }
+@keyframes eyes { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+
+/* Why now: a robot arm picks up a block and sets it down */
+.arm { width: 190px; height: 190px; top: clamp(20px, 3vw, 44px); right: max(16px, calc((100% - var(--wrap)) / 2 + 8px)); opacity: .9; }
+.arm-upper { transform-origin: 100px 154px; animation: arm-up 7s ease-in-out infinite; }
+.arm-fore { transform-origin: 100px 86px; animation: arm-fore 7s ease-in-out infinite; }
+.arm-grip { transform-origin: 160px 86px; animation: arm-grip 7s ease-in-out infinite; }
+.finger { animation: 7s ease-in-out infinite; }
+.fl { animation-name: finger-l; } .fr { animation-name: finger-r; }
+.cube { fill: var(--teal); animation: cube 7s ease-in-out infinite; }
+.arm .led { fill: var(--teal); animation: blink 1.6s ease-in-out infinite; }
+@keyframes arm-up { 0%, 100% { transform: rotate(-22deg); } 50% { transform: rotate(16deg); } }
+@keyframes arm-fore { 0%, 100% { transform: rotate(28deg); } 50% { transform: rotate(-18deg); } }
+@keyframes arm-grip { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(2deg); } }
+@keyframes finger-l { 0%, 44%, 60%, 100% { transform: translateX(0); } 50%, 54% { transform: translateX(-3px); } }
+@keyframes finger-r { 0%, 44%, 60%, 100% { transform: translateX(0); } 50%, 54% { transform: translateX(3px); } }
+@keyframes cube { 0%, 49% { opacity: 1; } 51%, 98% { opacity: 0; } 100% { opacity: 1; } }
+
+/* The week: a little rover drives up and down its lane */
+.rover-lane { position: relative; height: 78px; margin-top: 28px; }
+.rover-lane::after { content: ""; position: absolute; left: 0; right: 0; bottom: 4px; border-bottom: 2px dashed var(--line); }
+.rover { position: absolute; bottom: 6px; left: 0; width: 92px; height: 77px; animation: drive 24s ease-in-out infinite; }
+.rover svg { width: 100%; height: 100%; animation: bump .5s ease-in-out infinite; }
+.wheel { animation: spin 1.1s linear infinite; }
+.w1 { transform-origin: 34px 84px; } .w2 { transform-origin: 84px 84px; }
+.eyes { transform-origin: 62px 45px; animation: eyes 4.5s ease-in-out infinite; }
+.led-rust { fill: var(--rust); animation: blink 1.2s ease-in-out infinite; }
+@keyframes drive { 0% { left: 0; transform: scaleX(1); } 46% { left: calc(100% - 92px); transform: scaleX(1); } 50% { left: calc(100% - 92px); transform: scaleX(-1); } 96% { left: 0; transform: scaleX(-1); } 100% { left: 0; transform: scaleX(1); } }
+@keyframes bump { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.5px); } }
+
+/* Who the centre serves: signals run along circuit traces into a chip */
+#who { background-color: var(--paper-2); background-image: radial-gradient(var(--dot) 1.2px, transparent 1.6px); background-size: 22px 22px; }
+.circuit { width: 320px; height: 200px; top: clamp(24px, 4vw, 52px); right: max(16px, calc((100% - var(--wrap)) / 2)); }
+.traces path { fill: none; stroke: var(--muted); stroke-width: 2; opacity: .35; }
+.pulses path { fill: none; stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: .1 .9; stroke-dashoffset: 1; animation: signal 2.8s linear infinite; }
+.pads circle { fill: var(--paper-2); stroke: var(--muted); stroke-width: 2; opacity: .7; }
+.chip { opacity: .9; }
+.chip-t { font-family: var(--mono); font-size: 18px; font-weight: 500; fill: var(--paper); letter-spacing: .1em; }
+.circuit .led { fill: var(--band-accent); animation: blink 1.4s ease-in-out infinite; }
+.circuit .l2 { animation-delay: .7s; }
+@keyframes signal { to { stroke-dashoffset: 0; } }
+
+/* Questions parents ask: a drone hovers with a question for you */
+.drone { width: 170px; height: 160px; top: 50%; margin-top: -60px; right: max(16px, calc((100% - var(--wrap)) / 2 + 16px)); }
+.drone-body { animation: hover 9s ease-in-out infinite; }
+.prop { fill: var(--ink); opacity: .55; transform-box: fill-box; transform-origin: center; animation: prop .18s linear infinite; }
+.p2 { animation-delay: -.09s; }
+.parcel { transform-origin: 80px 60px; animation: swing 3.2s ease-in-out infinite; }
+.q { font-family: var(--display); font-size: 28px; font-weight: 700; fill: var(--on-part); }
+@keyframes hover { 0%, 100% { transform: translate(0, 0) rotate(0); } 30% { transform: translate(-10px, -12px) rotate(-3deg); } 65% { transform: translate(8px, -4px) rotate(2deg); } }
+@keyframes prop { 50% { transform: scaleX(.25); } }
+@keyframes swing { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
+
+/* Enquiry: a paper plane loops along its flight path */
+.flight { position: relative; width: 280px; max-width: 100%; height: 140px; margin-top: 28px; }
+.flight-path { position: absolute; inset: 0; width: 280px; height: 140px; }
+.flight-path path { fill: none; stroke: var(--line); stroke-width: 2; stroke-dasharray: 4 7; }
+.plane { position: absolute; left: 0; top: 0; width: 30px; height: 22px; offset-path: path("M12 118 C 70 30, 120 150, 170 70 S 250 20, 268 34"); offset-rotate: auto; offset-anchor: 50% 50%; animation: fly 7s ease-in-out infinite; }
+@keyframes fly { 0% { offset-distance: 0%; opacity: 0; } 8% { opacity: 1; } 86% { opacity: 1; } 100% { offset-distance: 100%; opacity: 0; } }
+
+@media (max-width: 1180px) { .drone { display: none; } }
+@media (max-width: 1100px) { .arm { display: none; } }
+@media (max-width: 1000px) { .circuit { display: none; } }
+@media (max-width: 680px) { .rover-lane { height: 62px; } .rover { width: 74px; height: 62px; } @keyframes drive { 0% { left: 0; transform: scaleX(1); } 46% { left: calc(100% - 74px); transform: scaleX(1); } 50% { left: calc(100% - 74px); transform: scaleX(-1); } 96% { left: 0; transform: scaleX(-1); } 100% { left: 0; transform: scaleX(1); } } }
+@media (prefers-reduced-motion: reduce) { .plane { offset-distance: 60%; opacity: 1; } .cube { opacity: 1; } }
 
 /* Footer colour bar draws in */
 #foot-parts i { transform-origin: left center; }
@@ -528,8 +631,6 @@ main, footer { position: relative; z-index: 1; }
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 </svg>
 
-<canvas id="bg-canvas" aria-hidden="true"></canvas>
-
 <header class="site-header">
   <div class="wrap header-row">
     <a class="brand" href="#top" aria-label="VINC home">
@@ -554,6 +655,7 @@ main, footer { position: relative; z-index: 1; }
 
   <!-- Hero -->
   <section class="hero" aria-labelledby="hero-title">
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
     <div class="wrap hero-grid">
       <div class="hero-copy">
         <p class="label">Learning Centre for Skill Education · Bengaluru</p>
@@ -595,7 +697,26 @@ main, footer { position: relative; z-index: 1; }
   </div>
 
   <!-- Why now -->
-  <section id="why" aria-labelledby="why-title">
+  <section id="why" class="deco-host" aria-labelledby="why-title">
+    <svg class="deco arm" viewBox="0 0 200 200" aria-hidden="true">
+      <rect x="44" y="178" width="112" height="12" rx="5" class="f-ink"/>
+      <rect x="86" y="152" width="28" height="28" rx="6" class="f-ink"/>
+      <circle class="led" cx="100" cy="184" r="2.6"/>
+      <g class="arm-upper">
+        <rect x="92" y="80" width="16" height="76" rx="8" class="f-amber"/>
+        <g class="arm-fore">
+          <rect x="96" y="78" width="66" height="16" rx="8" class="f-amber"/>
+          <g class="arm-grip">
+            <rect x="152" y="88" width="16" height="10" rx="2" class="f-ink"/>
+            <rect class="finger fl f-ink" x="150" y="96" width="5" height="17" rx="2"/>
+            <rect class="finger fr f-ink" x="165" y="96" width="5" height="17" rx="2"/>
+            <rect class="cube" x="154" y="104" width="12" height="12" rx="2"/>
+          </g>
+          <circle cx="100" cy="86" r="9" class="f-rust"/>
+        </g>
+        <circle cx="100" cy="154" r="11" class="f-rust"/>
+      </g>
+    </svg>
     <div class="wrap">
       <div class="section-head reveal">
         <p class="label">Why now</p>
@@ -762,6 +883,21 @@ main, footer { position: relative; z-index: 1; }
           </ul>
         </article>
       </div>
+      <div class="rover-lane" aria-hidden="true">
+        <div class="rover">
+          <svg viewBox="0 0 120 100">
+            <line x1="56" y1="10" x2="56" y2="26" class="s-ink"/>
+            <circle cx="56" cy="9" r="5" class="led-rust"/>
+            <rect x="20" y="24" width="76" height="46" rx="12" class="f-amber"/>
+            <rect x="96" y="40" width="10" height="12" rx="3" class="f-rust"/>
+            <rect x="30" y="32" width="56" height="26" rx="8" class="f-ink"/>
+            <g class="eyes"><circle cx="52" cy="45" r="4" class="f-amber"/><circle cx="72" cy="45" r="4" class="f-amber"/></g>
+            <rect x="14" y="66" width="90" height="10" rx="5" class="f-rust"/>
+            <g class="wheel w1"><circle cx="34" cy="84" r="13" class="f-ink"/><rect x="32.5" y="72" width="3" height="24" rx="1.5" class="f-paper"/><rect x="22" y="82.5" width="24" height="3" rx="1.5" class="f-paper"/><circle cx="34" cy="84" r="4" class="f-amber"/></g>
+            <g class="wheel w2"><circle cx="84" cy="84" r="13" class="f-ink"/><rect x="82.5" y="72" width="3" height="24" rx="1.5" class="f-paper"/><rect x="72" y="82.5" width="24" height="3" rx="1.5" class="f-paper"/><circle cx="84" cy="84" r="4" class="f-amber"/></g>
+          </svg>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -772,7 +908,7 @@ main, footer { position: relative; z-index: 1; }
         <div class="section-head reveal">
           <p class="label">How a quarter works</p>
           <h2 id="quarter-title">100 weekend seats, four batches of 25</h2>
-          <p class="lead">Small batches keep every student at a bench with a mentor. Families see progress three ways each quarter.</p>
+          <p class="lead">Small batches keep every student at a bench with a mentor. Choose a batch and pick a seat, the way you would on a flight. Families see progress three ways each quarter.</p>
         </div>
         <ol class="steps" data-stagger>
           <li><div><h3>Project showcase</h3><p>Students present their work to parents and guests at the end of every quarter.</p></div></li>
@@ -781,14 +917,32 @@ main, footer { position: relative; z-index: 1; }
         </ol>
       </div>
       <div class="seat-board reveal" id="seat-board">
-        <p class="label">Seats each quarter · hover or tap a batch</p>
-        <div class="batches">
-          <button class="batch b" type="button"><span class="batch-name">Building · batch 1</span><span class="dots"></span></button>
-          <button class="batch b" type="button"><span class="batch-name">Building · batch 2</span><span class="dots"></span></button>
-          <button class="batch a" type="button"><span class="batch-name">Applied AI · batch 1</span><span class="dots"></span></button>
-          <button class="batch a" type="button"><span class="batch-name">Applied AI · batch 2</span><span class="dots"></span></button>
+        <div class="sb-head">
+          <p class="label">Pick a seat · weekend batches</p>
+          <p class="sb-open"><b id="seat-count">100</b> seats open this quarter</p>
         </div>
-        <div class="seat-total"><b id="seat-count">100</b><span id="seat-label">seats across all four batches</span></div>
+        <div class="batch-tabs" role="tablist" aria-label="Batches" id="batch-tabs">
+          <button class="bt b" role="tab" aria-selected="true" aria-controls="cabin" data-prog="Building" data-batch="1" data-grades="Grades 6–8"><span>Building</span><b>Batch 1</b></button>
+          <button class="bt b" role="tab" aria-selected="false" aria-controls="cabin" tabindex="-1" data-prog="Building" data-batch="2" data-grades="Grades 6–8"><span>Building</span><b>Batch 2</b></button>
+          <button class="bt a" role="tab" aria-selected="false" aria-controls="cabin" tabindex="-1" data-prog="Applied AI" data-batch="1" data-grades="Grades 9–12"><span>Applied AI</span><b>Batch 1</b></button>
+          <button class="bt a" role="tab" aria-selected="false" aria-controls="cabin" tabindex="-1" data-prog="Applied AI" data-batch="2" data-grades="Grades 9–12"><span>Applied AI</span><b>Batch 2</b></button>
+        </div>
+        <div class="cabin" id="cabin" role="tabpanel" data-kind="b">
+          <p class="cabin-front">Lab bench · mentor</p>
+          <div class="seat-cols" aria-hidden="true"><span></span><span>A</span><span>B</span><span></span><span>C</span><span>D</span><span>E</span></div>
+          <div class="seat-grid" id="seat-grid" role="group" aria-label="Seats in this batch"></div>
+          <div class="legend" aria-hidden="true"><span><i class="lg"></i>Open</span><span><i class="lg pick"></i>Your pick</span></div>
+        </div>
+        <div class="pass" id="pass" aria-live="polite">
+          <div class="pass-main">
+            <div><span class="label">Programme</span><b id="pass-prog">Building</b></div>
+            <div><span class="label">Batch</span><b id="pass-batch">1</b></div>
+            <div><span class="label">Seat</span><b id="pass-seat">–</b></div>
+          </div>
+          <p class="small muted" id="pass-note">Grades 6–8 · weekends · 1 quarter. Tap an open seat to choose it.</p>
+          <button class="btn btn-primary" type="button" id="pass-go" disabled>Request this seat <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        </div>
+        <p class="small muted">Your seat number goes with your request. Seats are confirmed at enrolment.</p>
       </div>
     </div>
   </section>
@@ -829,7 +983,26 @@ main, footer { position: relative; z-index: 1; }
   </section>
 
   <!-- Audiences -->
-  <section id="who" class="band-alt" aria-labelledby="who-title">
+  <section id="who" class="deco-host" aria-labelledby="who-title">
+    <svg class="deco circuit" viewBox="0 0 320 200" aria-hidden="true">
+      <g class="traces">
+        <path d="M0 60 H80 L104 88 H130"/><path d="M0 150 H56 L84 116 H130"/>
+        <path d="M200 92 H246 L272 60 H320"/><path d="M200 114 H236 L262 150 H320"/>
+        <path d="M165 0 V40 L150 56 V80"/><path d="M165 200 V126"/>
+      </g>
+      <g class="pulses">
+        <path pathLength="1" d="M0 60 H80 L104 88 H130" style="stroke:var(--amber);animation-delay:0s"/>
+        <path pathLength="1" d="M0 150 H56 L84 116 H130" style="stroke:var(--rust);animation-delay:1.1s"/>
+        <path pathLength="1" d="M320 60 H272 L246 92 H200" style="stroke:var(--teal);animation-delay:.6s"/>
+        <path pathLength="1" d="M320 150 H262 L236 114 H200" style="stroke:var(--plum);animation-delay:1.7s"/>
+        <path pathLength="1" d="M165 0 V40 L150 56 V80" style="stroke:var(--amber);animation-delay:2.2s"/>
+        <path pathLength="1" d="M165 200 V126" style="stroke:var(--teal);animation-delay:.3s"/>
+      </g>
+      <g class="pads"><circle cx="80" cy="60" r="4"/><circle cx="56" cy="150" r="4"/><circle cx="246" cy="92" r="4"/><circle cx="236" cy="114" r="4"/><circle cx="165" cy="40" r="4"/><circle cx="272" cy="60" r="4"/></g>
+      <rect x="130" y="80" width="70" height="46" rx="7" class="f-ink chip"/>
+      <text x="165" y="109" text-anchor="middle" class="chip-t">AI</text>
+      <circle cx="140" cy="90" r="2.4" class="led"/><circle cx="190" cy="116" r="2.4" class="led l2"/>
+    </svg>
     <div class="wrap">
       <div class="section-head reveal">
         <p class="label">Who the centre serves</p>
@@ -888,7 +1061,21 @@ main, footer { position: relative; z-index: 1; }
   </section>
 
   <!-- FAQ -->
-  <section id="faq" class="band-alt" aria-labelledby="faq-title">
+  <section id="faq" class="deco-host" aria-labelledby="faq-title">
+    <svg class="deco drone" viewBox="0 0 160 150" aria-hidden="true">
+      <g class="drone-body">
+        <rect x="16" y="40" width="128" height="6" rx="3" class="f-ink"/>
+        <rect x="26" y="28" width="4" height="14" class="f-ink"/><rect x="130" y="28" width="4" height="14" class="f-ink"/>
+        <ellipse class="prop" cx="28" cy="28" rx="22" ry="3"/><ellipse class="prop p2" cx="132" cy="28" rx="22" ry="3"/>
+        <rect x="54" y="34" width="52" height="26" rx="13" class="f-rust"/>
+        <circle cx="80" cy="47" r="6" class="f-paper"/><circle cx="80" cy="47" r="3" class="f-ink"/>
+        <g class="parcel">
+          <line x1="80" y1="60" x2="80" y2="88" class="s-ink dashed"/>
+          <rect x="60" y="88" width="40" height="40" rx="7" class="f-teal"/>
+          <text x="80" y="118" text-anchor="middle" class="q">?</text>
+        </g>
+      </g>
+    </svg>
     <div class="wrap">
       <div class="section-head reveal">
         <p class="label">Questions parents ask</p>
@@ -908,7 +1095,7 @@ main, footer { position: relative; z-index: 1; }
   </section>
 
   <!-- Enquiry -->
-  <section id="enquire" aria-labelledby="enq-title">
+  <section id="enquire" class="band-alt" aria-labelledby="enq-title">
     <div class="wrap enquire-grid">
       <div class="reveal">
         <div class="section-head">
@@ -922,6 +1109,10 @@ main, footer { position: relative; z-index: 1; }
           <li><span class="label">Email</span><span class="email-row"><a href="mailto:info@vinc-lab.com" id="email-addr">info@vinc-lab.com</a><button type="button" class="copy-chip" id="copy-email">Copy</button></span></li>
           <li><span class="label">Hours</span><span>Weekdays for undergraduates and schools · weekends for Grades 6–12</span></li>
         </ul>
+        <div class="flight" aria-hidden="true">
+          <svg class="flight-path" viewBox="0 0 280 140"><path d="M12 118 C 70 30, 120 150, 170 70 S 250 20, 268 34"/></svg>
+          <svg class="plane" viewBox="0 0 32 24"><path d="M1 3 31 12 1 21 7 12z" class="f-rust"/><path d="M7 12h24" class="s-paper"/></svg>
+        </div>
       </div>
 
       <form class="card" id="enquiry" novalidate>
@@ -1098,10 +1289,10 @@ main, footer { position: relative; z-index: 1; }
     g.style.setProperty("--mx", (e.clientX - r.left) + "px"); g.style.setProperty("--my", (e.clientY - r.top) + "px");
   }, { passive: true });
 
-  /* Background: drifting nodes in the four part colours, joined like a circuit; reaches toward the pointer */
+  /* Hero background: drifting nodes in the four part colours, joined like a circuit; reaches toward the pointer */
   (function () {
-    var c = $("#bg-canvas"); if (!c || !c.getContext) return;
-    var ctx = c.getContext("2d"), W = 0, H = 0, nodes = [], cols = [], ink = "#2B1A10", t = 0, raf = 0;
+    var hero = $(".hero"), c = $("#bg-canvas"); if (!c || !c.getContext || !hero) return;
+    var ctx = c.getContext("2d"), W = 0, H = 0, nodes = [], cols = [], ink = "#2B1A10", t = 0, raf = 0, visible = true;
     var mouse = { x: -1e4, y: -1e4 }, LINK = 130, REACH = 180;
     function readColors() {
       var cs = getComputedStyle(root);
@@ -1110,50 +1301,48 @@ main, footer { position: relative; z-index: 1; }
     }
     function size() {
       var dpr = Math.min(2, window.devicePixelRatio || 1);
-      W = window.innerWidth; H = window.innerHeight;
+      W = hero.clientWidth; H = hero.clientHeight;
       c.width = Math.round(W * dpr); c.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      var n = Math.round(Math.max(24, Math.min(72, W * H / 21000)));
+      var n = Math.round(Math.max(22, Math.min(64, W * H / 15000)));
       nodes = [];
-      for (var i = 0; i < n; i++) nodes.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * 0.22, vy: (Math.random() - 0.5) * 0.22, r: 1.6 + Math.random() * 2.2, c: i % 4, sq: Math.random() < 0.3, ph: Math.random() * 6.28 });
+      for (var i = 0; i < n; i++) nodes.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * 0.24, vy: (Math.random() - 0.5) * 0.24, r: 1.6 + Math.random() * 2.2, c: i % 4, sq: Math.random() < 0.3, ph: Math.random() * 6.28 });
     }
     function frame() {
       t += 1;
       ctx.clearRect(0, 0, W, H);
-      var off = (window.scrollY * 0.12) % H, pts = [];
-      for (var i = 0; i < nodes.length; i++) {
-        var n = nodes[i];
+      var i, j, n;
+      for (i = 0; i < nodes.length; i++) {
+        n = nodes[i];
         if (!REDUCED) { n.x += n.vx; n.y += n.vy; if (n.x < -10) n.x = W + 10; if (n.x > W + 10) n.x = -10; if (n.y < -10) n.y = H + 10; if (n.y > H + 10) n.y = -10; }
-        pts.push({ x: n.x, y: ((n.y - off) % H + H) % H, n: n });
       }
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = ink;
-      for (i = 0; i < pts.length; i++) for (var j = i + 1; j < pts.length; j++) {
-        var dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y, d = Math.sqrt(dx * dx + dy * dy);
-        if (d < LINK) { ctx.globalAlpha = (1 - d / LINK) * 0.13; ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y); ctx.stroke(); }
+      ctx.lineWidth = 1; ctx.strokeStyle = ink;
+      for (i = 0; i < nodes.length; i++) for (j = i + 1; j < nodes.length; j++) {
+        var dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y, d = Math.sqrt(dx * dx + dy * dy);
+        if (d < LINK) { ctx.globalAlpha = (1 - d / LINK) * 0.14; ctx.beginPath(); ctx.moveTo(nodes[i].x, nodes[i].y); ctx.lineTo(nodes[j].x, nodes[j].y); ctx.stroke(); }
       }
-      for (i = 0; i < pts.length; i++) {
-        var p = pts[i], col = cols[p.n.c];
-        var mdx = p.x - mouse.x, mdy = p.y - mouse.y, md = Math.sqrt(mdx * mdx + mdy * mdy);
-        if (md < REACH) { ctx.globalAlpha = (1 - md / REACH) * 0.45; ctx.strokeStyle = col; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke(); }
-        var r = p.n.r * (REDUCED ? 1 : 1 + 0.25 * Math.sin(t * 0.03 + p.n.ph));
+      for (i = 0; i < nodes.length; i++) {
+        n = nodes[i]; var col = cols[n.c];
+        var mdx = n.x - mouse.x, mdy = n.y - mouse.y, md = Math.sqrt(mdx * mdx + mdy * mdy);
+        if (md < REACH) { ctx.globalAlpha = (1 - md / REACH) * 0.45; ctx.strokeStyle = col; ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke(); }
+        var r = n.r * (REDUCED ? 1 : 1 + 0.25 * Math.sin(t * 0.03 + n.ph));
         ctx.globalAlpha = md < REACH ? 0.85 : 0.5; ctx.fillStyle = col;
-        if (p.n.sq) { ctx.fillRect(p.x - r, p.y - r, r * 2, r * 2); } else { ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 6.2832); ctx.fill(); }
+        if (n.sq) ctx.fillRect(n.x - r, n.y - r, r * 2, r * 2); else { ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, 6.2832); ctx.fill(); }
       }
       ctx.globalAlpha = 1;
-      if (!REDUCED) raf = requestAnimationFrame(frame);
+      if (!REDUCED && visible && !document.hidden) raf = requestAnimationFrame(frame);
     }
     function restart() { cancelAnimationFrame(raf); frame(); }
     readColors(); size(); frame();
-    window.addEventListener("resize", function () { size(); restart(); });
-    if (REDUCED) window.addEventListener("scroll", function () { requestAnimationFrame(frame); }, { passive: true });
-    window.addEventListener("pointermove", function (e) { mouse.x = e.clientX; mouse.y = e.clientY; if (REDUCED) requestAnimationFrame(frame); }, { passive: true });
-    document.addEventListener("pointerleave", function () { mouse.x = mouse.y = -1e4; });
-    document.addEventListener("visibilitychange", function () { if (document.hidden) cancelAnimationFrame(raf); else if (!REDUCED) restart(); });
+    if ("ResizeObserver" in window) new ResizeObserver(function () { size(); restart(); }).observe(hero);
+    else window.addEventListener("resize", function () { size(); restart(); });
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible) restart(); else cancelAnimationFrame(raf); }).observe(hero);
+    hero.addEventListener("pointermove", function (e) { var b = hero.getBoundingClientRect(); mouse.x = e.clientX - b.left; mouse.y = e.clientY - b.top; if (REDUCED) requestAnimationFrame(frame); }, { passive: true });
+    hero.addEventListener("pointerleave", function () { mouse.x = mouse.y = -1e4; if (REDUCED) requestAnimationFrame(frame); });
+    document.addEventListener("visibilitychange", function () { if (!document.hidden && visible) restart(); });
     var mq = window.matchMedia("(prefers-color-scheme: dark)");
     if (mq.addEventListener) mq.addEventListener("change", function () { readColors(); restart(); });
     new MutationObserver(function () { readColors(); restart(); }).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
   })();
-
 
   /* Scroll spy */
   var navLinks = $$('.nav a[href^="#"]:not(.btn)');
@@ -1251,20 +1440,61 @@ main, footer { position: relative; z-index: 1; }
   });
   pickDay(today);
 
-  /* Seat board */
-  var board = $("#seat-board"), seatCount = $("#seat-count"), seatLabel = $("#seat-label");
-  $$(".batch", board).forEach(function (b) {
-    var dots = $(".dots", b);
-    var bi = $$(".batch", board).indexOf(b);
-    for (var i = 0; i < 25; i++) { var dot = document.createElement("i"); dot.style.setProperty("--n", bi * 25 + i); dots.appendChild(dot); }
-    function on() {
-      board.classList.add("has-focus"); $$(".batch", board).forEach(function (x) { x.classList.remove("is-focus"); }); b.classList.add("is-focus");
-      seatCount.textContent = "25"; seatLabel.textContent = "seats in " + $(".batch-name", b).textContent;
-    }
-    function off() { board.classList.remove("has-focus"); b.classList.remove("is-focus"); seatCount.textContent = "100"; seatLabel.textContent = "seats across all four batches"; }
-    b.addEventListener("mouseenter", on); b.addEventListener("focus", on);
-    b.addEventListener("mouseleave", off); b.addEventListener("blur", off);
-    b.addEventListener("click", on);
+  /* Seat picker */
+  var seatGrid = $("#seat-grid"), cabin = $("#cabin"), btabs = $$("#batch-tabs .bt"), picked = null, cur = null, seats = [];
+  for (var r = 1; r <= 5; r++) {
+    var row = document.createElement("div"); row.className = "seat-row";
+    var rn = document.createElement("span"); rn.className = "row-n"; rn.textContent = r; row.appendChild(rn);
+    ["A", "B", "", "C", "D", "E"].forEach(function (L) {
+      if (!L) { row.appendChild(document.createElement("span")); return; }
+      var s = document.createElement("button");
+      s.type = "button"; s.className = "seat"; s.dataset.seat = r + L;
+      s.setAttribute("aria-pressed", "false"); s.setAttribute("aria-label", "Row " + r + ", seat " + L + ", open");
+      s.style.setProperty("--n", seats.length);
+      s.addEventListener("click", function () { pickSeat(s); });
+      seats.push(s); row.appendChild(s);
+    });
+    seatGrid.appendChild(row);
+  }
+  function updatePass() {
+    $("#pass-prog").textContent = cur.prog; $("#pass-batch").textContent = cur.batch; $("#pass-seat").textContent = picked || "–";
+    $("#pass-note").textContent = cur.grades + " · weekends · 1 quarter. " + (picked ? "24 other seats are open in this batch." : "Tap an open seat to choose it.");
+    $("#pass-go").disabled = !picked;
+    var pass = $("#pass"); pass.classList.remove("bump"); void pass.offsetWidth; pass.classList.add("bump");
+  }
+  function pickSeat(s) {
+    var on = s.getAttribute("aria-pressed") !== "true";
+    seats.forEach(function (x) { x.setAttribute("aria-pressed", "false"); x.setAttribute("aria-label", x.getAttribute("aria-label").replace("your pick", "open")); });
+    picked = null;
+    if (on) { s.setAttribute("aria-pressed", "true"); s.setAttribute("aria-label", s.getAttribute("aria-label").replace("open", "your pick")); picked = s.dataset.seat; }
+    updatePass();
+  }
+  function setBatch(t, focus) {
+    btabs.forEach(function (x) { var on = x === t; x.setAttribute("aria-selected", String(on)); x.tabIndex = on ? 0 : -1; });
+    if (focus) t.focus();
+    cur = { prog: t.dataset.prog, batch: t.dataset.batch, grades: t.dataset.grades };
+    cabin.dataset.kind = t.classList.contains("a") ? "a" : "b";
+    cabin.setAttribute("aria-label", cur.prog + " batch " + cur.batch);
+    seats.forEach(function (x) { x.setAttribute("aria-pressed", "false"); x.setAttribute("aria-label", x.getAttribute("aria-label").replace("your pick", "open")); });
+    picked = null; updatePass();
+    if (!REDUCED) { cabin.classList.remove("go2"); void cabin.offsetWidth; cabin.classList.add("go2"); }
+  }
+  btabs.forEach(function (t, i) {
+    t.addEventListener("click", function () { if (t.getAttribute("aria-selected") !== "true") setBatch(t); });
+    t.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") { e.preventDefault(); setBatch(btabs[(i + 1) % btabs.length], true); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); setBatch(btabs[(i + btabs.length - 1) % btabs.length], true); }
+    });
+  });
+  cur = { prog: "Building", batch: "1", grades: "Grades 6–8" };
+  $("#pass-go").addEventListener("click", function () {
+    if (!picked) return;
+    setInterest(cur.prog === "Building" ? "Building programme (Grades 6–8)" : "Applied AI programme (Grades 9–12)");
+    var line = "Seat request: " + cur.prog + " · Batch " + cur.batch + " · Seat " + picked;
+    var m = $("#msg"), rest = m.value.split("\n").filter(function (l) { return l.indexOf("Seat request:") !== 0; }).join("\n").trim();
+    m.value = line + (rest ? "\n" + rest : "");
+    $("#enquire").scrollIntoView();
+    try { $("#name").focus({ preventScroll: true }); } catch (err) { /* older browsers */ }
   });
 
   /* Journey */

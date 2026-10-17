@@ -15,7 +15,9 @@ company policy pages linked from the footer.
 - **Programme finder**: pick a grade (6–12) to highlight Building or Applied AI.
 - **A week at the centre**: opens on today's day. Weekdays show undergraduate
   courses and school work, weekends show the Grades 6–12 batches.
-- **Seat board**: 100 weekend seats in four batches of 25.
+- **Seat picker**: pick a batch, then a seat in its 25-seat cabin (five rows,
+  an aisle), like choosing a seat on a flight. "Request this seat" fills the
+  enquiry form with the programme, batch and seat.
 - **Free start**: a four-step walkthrough (sign up, skill score, demo class, enrol).
 - **Who the centre serves**: tabs for parents, schools, teachers and undergraduates.
 - **Enquiry form**: validates the visitor's details and sends them to
@@ -24,15 +26,18 @@ company policy pages linked from the footer.
 
 ## Motion
 
-- **Background**: a slow network of nodes in the four VINC colours drifts behind
-  the page like a circuit, shifts as you scroll and reaches toward the pointer.
-  Soft colour glows move behind the hero, and its grid drifts.
-- **Foreground**: the hero's four parts fly in and snap together, then float and
-  tilt toward the pointer; "build" gets a hand-drawn underline. Meshing gears turn
-  as you scroll, a ticker of programme topics runs between sections, cards glow
-  under the pointer, and a four-colour bar under the header shows scroll progress.
-- **On scroll**: sections lift in, the 100 seats fill one by one, struck-through
-  words draw their line, and panels ease in when a tab or day changes.
+- **Hero**: a slow network of nodes in the four VINC colours drifts behind the
+  opening section like a circuit and reaches toward the pointer, with soft colour
+  glows and a drifting grid. The four parts fly in, snap together, float and tilt
+  toward the pointer; "build" gets a hand-drawn underline.
+- **Section companions**: a robot arm picks and places a block (Why now), meshing
+  gears turn with scroll (Programmes, Start for free), a rover drives along its
+  lane (The week), signals run along circuit traces into a chip (Who the centre
+  serves), a drone hovers with a question parcel (FAQ) and a paper plane loops
+  beside the contact details. The larger pieces hide on narrow screens.
+- **Elsewhere**: a topic ticker, pointer glow on cards, a four-colour scroll
+  progress bar, sections that lift in on scroll, seats that pop in, and panels
+  that ease in when a tab or day changes.
 
 Everything is readable at rest, and visitors who set "reduce motion" on their
 device get a still page.
