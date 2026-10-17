@@ -615,14 +615,22 @@ address { font-style: normal; }
 .dd-bar.b1 { fill: var(--amber); } .dd-bar.b2 { fill: var(--rust); animation-delay: .15s; } .dd-bar.b3 { fill: var(--teal); animation-delay: .3s; } .dd-bar.b4 { fill: var(--plum); animation-delay: .45s; }
 .dd-line { stroke: var(--ink); stroke-width: 2; stroke-dasharray: 2 3; opacity: .5; }
 .dd-bot { animation: dd-drive 5s ease-in-out infinite; }
-.dd-skin { fill: #C98B5F; }
-.dd-hair { fill: #2B1A10; }
-.dd-pants { fill: var(--ink); opacity: .85; }
-.dd-smile { fill: none; stroke: #2B1A10; stroke-width: 2; stroke-linecap: round; }
+.dd-skin { fill: #C98B5F; } .dd-shade { fill: #B37650; } .dd-hair, .dd-dark { fill: #2B1A10; } .dd-trousers { fill: #3E5266; }
+.dd-limb { stroke: #C98B5F; stroke-width: 7; stroke-linecap: round; fill: none; }
+.dd-finger { stroke: #C98B5F; stroke-width: 3; stroke-linecap: round; }
+.dd-collar { fill: none; stroke: rgba(43, 26, 16, .35); stroke-width: 1.5; }
+.dd-lanyard { fill: none; stroke: var(--teal); stroke-width: 1.6; }
+.dd-badge { fill: #FFF7EA; stroke: var(--amber); stroke-width: 1.2; }
+.dd-brow { fill: none; stroke: #2B1A10; stroke-width: 1.4; stroke-linecap: round; }
+.dd-nose { fill: none; stroke: #9C6440; stroke-width: 1.2; stroke-linecap: round; }
+.dd-cheek { fill: #E07A5F; opacity: .35; }
+.dd-mouth { fill: #7A2E1E; }
+.dd-antenna { stroke: #2B1A10; stroke-width: 1.4; stroke-linecap: round; }
+.dd-rled { fill: var(--amber); animation: blink .9s ease-in-out infinite; }
 .dd-kid { animation: dd-sway 4.8s ease-in-out infinite; transform-origin: 150px 214px; }
-.dd-point { transform-origin: 162px 120px; animation: dd-point 4.8s ease-in-out infinite; }
-.dd-wave { transform-origin: 130px 120px; animation: dd-wave 4.8s ease-in-out infinite; }
-.dd-eyes { transform-origin: 150px 96px; animation: eyes 4s ease-in-out infinite; }
+.dd-point { transform-origin: 168px 124px; animation: dd-point 4.8s ease-in-out infinite; }
+.dd-remote { transform-origin: 128px 144px; animation: dd-press 2.5s ease-in-out infinite; }
+.dd-eyes { transform-origin: 150px 90.5px; animation: eyes 4s ease-in-out infinite; }
 .dd-bubble { transform-origin: 120px 60px; animation: dd-pop 14.4s ease-in-out infinite; }
 .dd-say { font-family: var(--body); font-size: 14px; font-weight: 700; fill: var(--ink); opacity: 0; animation: dd-say 14.4s linear infinite; }
 .dd-say.s2 { animation-delay: 4.8s; } .dd-say.s3 { animation-delay: 9.6s; }
@@ -636,8 +644,8 @@ address { font-style: normal; }
 @keyframes dd-bars { 0%, 100% { transform: scaleY(.35); } 40%, 70% { transform: scaleY(1); } }
 @keyframes dd-drive { 0%, 100% { transform: translateX(-12px); } 50% { transform: translateX(14px); } }
 @keyframes dd-sway { 0%, 100% { transform: rotate(-1deg); } 50% { transform: rotate(1.5deg); } }
-@keyframes dd-point { 0%, 100% { transform: rotate(-38deg); } 45%, 60% { transform: rotate(-8deg); } }
-@keyframes dd-wave { 0%, 100% { transform: rotate(8deg); } 50% { transform: rotate(-4deg); } }
+@keyframes dd-point { 0%, 100% { transform: rotate(5deg); } 45%, 60% { transform: rotate(-9deg); } }
+@keyframes dd-press { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-6deg); } }
 @keyframes dd-pop { 0%, 30%, 33.3%, 63%, 66.6%, 96%, 100% { transform: scale(1); } 1.5%, 34.8%, 68.1% { transform: scale(1.06); } }
 @keyframes dd-say { 0% { opacity: 0; } 2%, 31% { opacity: 1; } 33.3%, 100% { opacity: 0; } }
 @keyframes dd-fall { 0% { transform: translateY(-10px) rotate(0); opacity: 0; } 10% { opacity: .9; } 80% { opacity: .9; } 100% { transform: translateY(190px) rotate(320deg); opacity: 0; } }
@@ -648,8 +656,8 @@ address { font-style: normal; }
 /* Bigger gear train for the weekend programmes, three gears that keep turning and speed up with scroll */
 .gears.gear-train { width: 380px; height: 310px; top: clamp(28px, 4vw, 60px); }
 .gears.gear-train .g-big { width: 180px; height: 180px; left: 200px; top: 0; right: auto; }
-.gears.gear-train .g-small { width: 140px; height: 140px; left: 96px; top: 124px; right: auto; transform: rotate(calc(var(--spin, 0deg) * -1.667 + 16deg)); }
-.gears.gear-train .g-third { width: 112px; height: 112px; left: 262px; top: 196px; transform: rotate(calc(var(--spin, 0deg) * -1.25 + 10deg)); }
+.gears.gear-train .g-small { width: 140px; height: 140px; left: 81px; top: 117px; right: auto; transform: rotate(calc(var(--spin, 0deg) * -1.667 + 16deg)); }
+.gears.gear-train .g-third { width: 112px; height: 112px; left: 219px; top: 189px; transform: rotate(calc(var(--spin, 0deg) * -1.25 + 10deg)); }
 .gears.gear-train .gear { opacity: .26; }
 .gear-in { animation: spin 40s linear infinite; transform-origin: 0 0; }
 .g-small .gear-in { animation-duration: 24s; animation-direction: reverse; }
@@ -1021,15 +1029,35 @@ address { font-style: normal; }
               <circle cx="62" cy="163" r="4" class="f-ink"/><circle cx="86" cy="163" r="4" class="f-ink"/>
             </g>
             <g class="dd-kid">
-              <rect x="138" y="168" width="9" height="46" rx="4" class="dd-pants"/><rect x="152" y="168" width="9" height="46" rx="4" class="dd-pants"/>
-              <rect x="132" y="112" width="36" height="62" rx="13" class="f-rust"/>
-              <rect x="138" y="124" width="12" height="8" rx="2" class="f-amber"/>
-              <g class="dd-wave"><rect x="126" y="118" width="9" height="34" rx="4.5" class="f-rust"/><circle cx="130.5" cy="153" r="5" class="dd-skin"/></g>
-              <g class="dd-point"><rect x="160" y="116" width="34" height="9" rx="4.5" class="f-rust"/><circle cx="195" cy="120.5" r="5" class="dd-skin"/></g>
-              <circle cx="150" cy="94" r="17" class="dd-skin"/>
-              <path d="M133 92 C 133 74, 167 72, 167 90 C 160 84, 146 82, 133 92 Z" class="dd-hair"/>
-              <g class="dd-eyes"><circle cx="144" cy="96" r="2" class="dd-hair"/><circle cx="156" cy="96" r="2" class="dd-hair"/></g>
-              <path d="M144 103 Q 150 108 156 103" class="dd-smile"/>
+              <ellipse cx="142" cy="210" rx="8" ry="4" class="dd-dark"/><ellipse cx="158" cy="210" rx="8" ry="4" class="dd-dark"/>
+              <path d="M134 154 H166 L164 208 H153 L150 172 L147 208 H136 Z" class="dd-trousers"/>
+              <rect x="134" y="153" width="32" height="4" rx="1" class="dd-dark" opacity=".55"/>
+              <rect x="146" y="100" width="8" height="13" rx="3" class="dd-shade"/>
+              <path d="M134 114 Q150 108 166 114 L171 130 L165 132 L165 156 H135 L135 132 L129 130 Z" class="f-rust"/>
+              <path d="M144 112 Q150 118 156 112" class="dd-collar"/>
+              <path d="M145 113 L148 127 M155 113 L152 127" class="dd-lanyard"/>
+              <rect x="145" y="127" width="10" height="13" rx="2" class="dd-badge"/><rect x="147" y="131" width="6" height="2" rx="1" class="f-amber"/>
+              <line x1="131" y1="128" x2="128" y2="144" class="dd-limb"/>
+              <g class="dd-remote">
+                <line x1="128" y1="144" x2="138" y2="153" class="dd-limb"/>
+                <line x1="140" y1="146" x2="140" y2="139" class="dd-antenna"/>
+                <rect x="136" y="145" width="8" height="15" rx="2" class="dd-dark"/>
+                <circle cx="140" cy="149" r="1.6" class="dd-rled"/>
+                <circle cx="138.5" cy="155" r="4.3" class="dd-skin"/>
+              </g>
+              <g class="dd-point">
+                <line x1="168" y1="127" x2="193" y2="111" class="dd-limb"/>
+                <circle cx="195" cy="110" r="4.2" class="dd-skin"/>
+                <line x1="197" y1="108" x2="203" y2="103" class="dd-finger"/>
+              </g>
+              <ellipse cx="137.5" cy="91" rx="2.6" ry="4" class="dd-shade"/><ellipse cx="162.5" cy="91" rx="2.6" ry="4" class="dd-shade"/>
+              <ellipse cx="150" cy="90" rx="12.5" ry="14" class="dd-skin"/>
+              <path d="M137 88 C 136 74, 146 71, 152 72 C 160 73, 165 79, 163 89 C 160 83, 155 80, 150 81 C 145 82, 141 84, 137 88 Z" class="dd-hair"/>
+              <path d="M143 85.8 L147 85.2 M153 85.2 L157 85.8" class="dd-brow"/>
+              <g class="dd-eyes"><circle cx="145" cy="90.5" r="1.7" class="dd-hair"/><circle cx="155" cy="90.5" r="1.7" class="dd-hair"/></g>
+              <path d="M150 92 Q 151.6 95 149.6 96" class="dd-nose"/>
+              <circle cx="142.5" cy="96" r="2.2" class="dd-cheek"/><circle cx="157.5" cy="96" r="2.2" class="dd-cheek"/>
+              <path d="M145.5 98.5 Q 150 104 154.5 98.5 Z" class="dd-mouth"/>
             </g>
             <g class="dd-bubble">
               <rect x="10" y="20" width="132" height="40" rx="14" class="dd-panel"/>
