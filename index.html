@@ -37,6 +37,8 @@
   --logo-light: inline-block;
   --logo-dark: none;
   --shadow: 0 14px 34px -18px rgba(43, 26, 16, 0.45);
+  --glow: rgba(217, 138, 28, 0.16);
+  --orb: 0.32;
 
   --display: "Lora", Georgia, "Times New Roman", serif;
   --body: "DM Sans", "Segoe UI", Arial, sans-serif;
@@ -59,7 +61,7 @@
     --line: #47352A; --grid: rgba(244, 234, 219, 0.05); --amber: #E09A35; --amber-ink: #F0B44C; --rust: #CC5C35;
     --teal: #2A8378; --plum: #A4466E; --olive: #5D8A30; --on-part: #FFF7EA; --on-amber: #2B1A10;
     --band: #F4EADB; --on-band: #2B1A10; --band-accent: #9A5B0A; --focus: #F0B44C;
-    --logo-light: none; --logo-dark: inline-block; --shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.7); color-scheme: dark;
+    --logo-light: none; --logo-dark: inline-block; --shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.7); --glow: rgba(240, 180, 76, 0.12); --orb: 0.2; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
@@ -67,7 +69,7 @@
   --line: #47352A; --grid: rgba(244, 234, 219, 0.05); --amber: #E09A35; --amber-ink: #F0B44C; --rust: #CC5C35;
   --teal: #2A8378; --plum: #A4466E; --olive: #5D8A30; --on-part: #FFF7EA; --on-amber: #2B1A10;
   --band: #F4EADB; --on-band: #2B1A10; --band-accent: #9A5B0A; --focus: #F0B44C;
-  --logo-light: none; --logo-dark: inline-block; --shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.7); color-scheme: dark;
+  --logo-light: none; --logo-dark: inline-block; --shadow: 0 14px 34px -16px rgba(0, 0, 0, 0.7); --glow: rgba(240, 180, 76, 0.12); --orb: 0.2; color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -144,7 +146,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 /* Sections */
 section { padding-block: clamp(56px, 8vw, 104px); }
-.band-alt { background: var(--paper-2); }
+.band-alt { background: color-mix(in srgb, var(--paper-2) 90%, transparent); }
 .section-head { display: grid; gap: 14px; margin-bottom: clamp(28px, 4vw, 48px); max-width: 760px; }
 
 /* Hero */
@@ -305,20 +307,6 @@ section { padding-block: clamp(56px, 8vw, 104px); }
 .offer p { color: var(--ink-2); }
 .panel-foot { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between; }
 
-/* Opening plan */
-.timeline { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.tl { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 20px 22px; display: grid; gap: 8px; align-content: start; }
-.tl-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
-.tl-when { font-family: var(--mono); font-size: var(--t-label); color: var(--amber-ink); letter-spacing: .06em; text-transform: uppercase; }
-.tl-state { font-family: var(--mono); font-size: .6875rem; letter-spacing: .08em; text-transform: uppercase; padding: 2px 9px; border-radius: 999px; }
-.tl.is-done { opacity: .6; }
-.tl.is-done .tl-state { background: var(--paper-2); color: var(--muted); }
-.tl.is-now { border: 2px solid var(--rust); }
-.tl.is-now .tl-state { background: var(--rust); color: var(--on-part); }
-.tl.is-next .tl-state { background: var(--teal); color: var(--on-part); }
-.tl h3 { font-size: 1.25rem; }
-.tl p { color: var(--ink-2); font-size: var(--t-small); }
-
 /* FAQ */
 .faq { display: grid; gap: 10px; max-width: 860px; }
 .faq details { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 0 22px; }
@@ -395,11 +383,11 @@ address { font-style: normal; }
 .js .hero-copy > :nth-child(3) { animation-delay: .22s; }
 .js .hero-copy > :nth-child(4) { animation-delay: .34s; }
 .js .hero-copy > :nth-child(5) { animation-delay: .46s; }
-.js .part { animation: part-in 1s cubic-bezier(.2, .9, .25, 1.15) backwards; }
-.js .part[data-part="build"] { --fx: -70px; --fy: -50px; --fr: -14deg; animation-delay: .3s; }
-.js .part[data-part="code"] { --fx: 70px; --fy: -60px; --fr: 12deg; animation-delay: .42s; }
-.js .part[data-part="explore"] { --fx: -60px; --fy: 70px; --fr: 10deg; animation-delay: .54s; }
-.js .part[data-part="careers"] { --fx: 70px; --fy: 60px; --fr: -10deg; animation-delay: .66s; }
+.js .part { animation: part-in 1s cubic-bezier(.2, .9, .25, 1.15) backwards, float 6s ease-in-out infinite; }
+.js .part[data-part="build"] { --fx: -70px; --fy: -50px; --fr: -14deg; animation-delay: .3s, 1.4s; }
+.js .part[data-part="code"] { --fx: 70px; --fy: -60px; --fr: 12deg; animation-delay: .42s, 2.6s; }
+.js .part[data-part="explore"] { --fx: -60px; --fy: 70px; --fr: 10deg; animation-delay: .54s, 2s; }
+.js .part[data-part="careers"] { --fx: 70px; --fy: 60px; --fr: -10deg; animation-delay: .66s, 3.2s; }
 .js .part-caption { animation: rise .7s .95s cubic-bezier(.2, .7, .2, 1) backwards; }
 .part svg { transform-origin: 50% 50%; }
 .part:hover svg, .part:focus-visible svg { animation: wiggle .6s ease; }
@@ -434,8 +422,8 @@ address { font-style: normal; }
 .js .reveal.pre { transform: translateY(22px); opacity: .001; }
 
 /* Cards lift on hover */
-.offer, .tl, .mandate, .week-card { transition: transform .3s ease, box-shadow .3s ease, opacity .3s ease; }
-.offer:hover, .tl:hover, .mandate:hover, .week-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.offer, .mandate, .week-card { transition: transform .3s ease, box-shadow .3s ease, opacity .3s ease; }
+.offer:hover, .mandate:hover, .week-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
 .programme.is-match { animation: match .5s ease; }
 
 /* Week, journey and audience panels ease in when they change */
@@ -451,8 +439,51 @@ address { font-style: normal; }
 /* Seat board: the 100 seats fill in one by one */
 .seat-board.go .dots i { animation: dot-pop .45s cubic-bezier(.2, .9, .3, 1.3) backwards; animation-delay: calc(var(--n) * 9ms); }
 
-/* Opening plan: a live dot on the current or next week */
-.tl.is-now .tl-state::before, .tl.is-next .tl-state::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; margin-right: 6px; vertical-align: 1px; animation: blink 1.4s ease-in-out infinite; }
+/* Background: a slow circuit-like network on a fixed canvas behind the page, plus colour orbs in the hero */
+#bg-canvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+main, footer { position: relative; z-index: 1; }
+@keyframes orb-a { to { transform: translate(-140px, 110px) scale(1.15); } }
+@keyframes orb-b { to { transform: translate(170px, -90px) scale(.9); } }
+.hero { position: relative; overflow: clip; }
+.hero::before, .hero::after { content: ""; position: absolute; width: 520px; height: 520px; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; }
+.hero::before { background: var(--amber); opacity: var(--orb); top: -170px; right: -140px; animation: orb-a 18s ease-in-out infinite alternate; }
+.hero::after { background: var(--teal); opacity: calc(var(--orb) * .7); bottom: -240px; left: -180px; animation: orb-b 22s ease-in-out infinite alternate; }
+.hero > .wrap { position: relative; z-index: 1; }
+
+/* Foreground: the parts grid tilts toward the pointer and each tile floats on its own beat */
+@keyframes float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -7px; } }
+.parts-grid { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .5s cubic-bezier(.2, .7, .2, 1); }
+
+/* Meshing gears turn as the page scrolls */
+.has-gears { position: relative; overflow: clip; }
+.has-gears > .wrap { position: relative; z-index: 1; }
+.gears { position: absolute; top: clamp(24px, 4vw, 56px); right: max(16px, calc((100% - var(--wrap)) / 2)); width: 230px; height: 190px; pointer-events: none; z-index: 0; }
+.gear { position: absolute; opacity: .22; }
+.gear.g-big { width: 150px; height: 150px; right: 0; top: 0; transform: rotate(var(--spin, 0deg)); }
+.gear.g-small { width: 92px; height: 92px; right: 128px; top: 104px; transform: rotate(calc(var(--spin, 0deg) * -1.667 + 18deg)); }
+@media (max-width: 900px) { .gears { display: none; } }
+
+/* Scroll progress in the four part colours */
+.progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; pointer-events: none; }
+.progress i { display: block; height: 100%; transform-origin: left center; transform: scaleX(0);
+  background: linear-gradient(90deg, var(--amber) 0 25%, var(--rust) 25% 50%, var(--teal) 50% 75%, var(--plum) 75% 100%); }
+
+/* Pointer glow on cards */
+.glow { position: relative; isolation: isolate; }
+.glow::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: -1;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), var(--glow), transparent 70%); opacity: 0; transition: opacity .3s ease; }
+.glow:hover::after { opacity: 1; }
+.programme.glow { --glow: rgba(255, 247, 234, 0.16); }
+
+/* Topic ticker */
+@keyframes ticker { to { transform: translateX(-50%); } }
+.ticker { position: relative; z-index: 1; overflow: hidden; background: var(--paper); border-block: 1px solid var(--line); padding-block: 18px; }
+.ticker-track { display: flex; width: max-content; animation: ticker 42s linear infinite; }
+.ticker:hover .ticker-track { animation-play-state: paused; }
+.ticker span { display: inline-flex; align-items: center; gap: 28px; padding-right: 28px; white-space: nowrap;
+  font-family: var(--display); font-style: italic; font-weight: 500; font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem); }
+.ticker span::after { content: ""; width: 11px; height: 11px; border-radius: 3px; transform: rotate(45deg); background: var(--c, var(--amber)); }
+.ticker span:nth-child(4n+2) { --c: var(--rust); } .ticker span:nth-child(4n+3) { --c: var(--teal); } .ticker span:nth-child(4n) { --c: var(--plum); }
 
 /* Footer colour bar draws in */
 #foot-parts i { transform-origin: left center; }
@@ -469,12 +500,12 @@ address { font-style: normal; }
 
 @media (max-width: 900px) {
   .hero-grid, .quarter-grid, .enquire-grid, .journey-panel, .week-panel { grid-template-columns: 1fr; }
-  .offer-grid, .timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .offer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .journey-nav { justify-content: flex-start; }
   .parts { max-width: 520px; }
 }
 @media (max-width: 680px) {
-  .mandates, .programmes, .offer-grid, .timeline, .field-row { grid-template-columns: 1fr; }
+  .mandates, .programmes, .offer-grid, .field-row { grid-template-columns: 1fr; }
   .journey-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .foot, .foot-info { grid-template-columns: 1fr; }
   .week { gap: 4px; }
@@ -497,6 +528,8 @@ address { font-style: normal; }
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 </svg>
 
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+
 <header class="site-header">
   <div class="wrap header-row">
     <a class="brand" href="#top" aria-label="VINC home">
@@ -510,11 +543,11 @@ address { font-style: normal; }
       <a href="#week">The week</a>
       <a href="#start">Free start</a>
       <a href="#who">Schools &amp; teachers</a>
-      <a href="#opening">Opening</a>
       <a href="#faq">FAQ</a>
       <a class="btn btn-primary" href="#enquire">Book a demo class</a>
     </nav>
   </div>
+  <div class="progress" aria-hidden="true"><i id="progress-bar"></i></div>
 </header>
 
 <main id="top">
@@ -595,7 +628,8 @@ address { font-style: normal; }
   </section>
 
   <!-- Programmes -->
-  <section id="programmes" class="band-alt" aria-labelledby="prog-title">
+  <section id="programmes" class="band-alt has-gears" aria-labelledby="prog-title">
+    <div class="gears" aria-hidden="true"><svg class="gear g-big" viewBox="-50 -50 100 100" aria-hidden="true" style="color:var(--amber)"><g fill="currentColor"><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(0)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(36)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(72)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(108)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(144)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(180)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(216)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(252)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(288)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(324)"/></g><circle r="30" fill="none" stroke="currentColor" stroke-width="11"/><circle r="7" fill="currentColor"/></svg><svg class="gear g-small" viewBox="-50 -50 100 100" aria-hidden="true" style="color:var(--rust)"><g fill="currentColor"><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(0)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(60)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(120)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(180)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(240)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(300)"/></g><circle r="30" fill="none" stroke="currentColor" stroke-width="11"/><circle r="7" fill="currentColor"/></svg></div>
     <div class="wrap">
       <div class="section-head reveal">
         <p class="label">Weekends · Grades 6–12</p>
@@ -661,6 +695,8 @@ address { font-style: normal; }
       <p class="fineprint">Building and Applied AI are VINC's own programmes. They complement school teaching and are not NCERT or CBSE courses. Fees are paid at enrolment.</p>
     </div>
   </section>
+
+  <div class="ticker" aria-hidden="true"><div class="ticker-track"><span>Robotics and automation</span><span>Computational thinking</span><span>Basic electronics</span><span>3D design</span><span>Advanced robotics</span><span>Internet of Things</span><span>Machine learning</span><span>Capstone projects</span><span>Portfolios</span><span>Robotics and automation</span><span>Computational thinking</span><span>Basic electronics</span><span>3D design</span><span>Advanced robotics</span><span>Internet of Things</span><span>Machine learning</span><span>Capstone projects</span><span>Portfolios</span></div></div>
 
   <!-- The week -->
   <section id="week" aria-labelledby="week-title">
@@ -758,7 +794,8 @@ address { font-style: normal; }
   </section>
 
   <!-- Free start journey -->
-  <section id="start" aria-labelledby="start-title">
+  <section id="start" class="has-gears" aria-labelledby="start-title">
+    <div class="gears" aria-hidden="true"><svg class="gear g-big" viewBox="-50 -50 100 100" aria-hidden="true" style="color:var(--teal)"><g fill="currentColor"><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(0)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(36)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(72)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(108)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(144)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(180)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(216)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(252)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(288)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(324)"/></g><circle r="30" fill="none" stroke="currentColor" stroke-width="11"/><circle r="7" fill="currentColor"/></svg><svg class="gear g-small" viewBox="-50 -50 100 100" aria-hidden="true" style="color:var(--plum)"><g fill="currentColor"><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(0)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(60)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(120)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(180)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(240)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(300)"/></g><circle r="30" fill="none" stroke="currentColor" stroke-width="11"/><circle r="7" fill="currentColor"/></svg></div>
     <div class="wrap">
       <div class="section-head reveal">
         <p class="label">Start for free</p>
@@ -847,26 +884,6 @@ address { font-style: normal; }
         </div>
         <div class="panel-foot"><p class="muted">Weekday courses are being built now. Course list, fees and batch sizes will be announced.</p><a class="btn btn-primary" href="#enquire" data-interest="Undergraduate career courses">Register interest</a></div>
       </div>
-    </div>
-  </section>
-
-  <!-- Opening plan -->
-  <section id="opening" aria-labelledby="open-title">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="label">Opening plan · autumn 2026</p>
-        <h2 id="open-title">Six weeks to the first full quarter</h2>
-        <p class="lead">Planned dates for the Bengaluru opening. The current week is highlighted.</p>
-      </div>
-      <ol class="timeline" id="timeline" data-stagger>
-        <li class="tl" data-start="2026-10-19" data-end="2026-10-25"><div class="tl-top"><span class="tl-when">19–25 Oct</span><span class="tl-state"></span></div><h3>Enquiries open</h3><p>The admissions desk opens for enquiries. School and society seminar slots open for booking.</p></li>
-        <li class="tl" data-start="2026-10-26" data-end="2026-11-01"><div class="tl-top"><span class="tl-when">26 Oct–1 Nov</span><span class="tl-state"></span></div><h3>Seminars start</h3><p>First school and society talks. The free skill assessment drive begins and demo-class slots open.</p></li>
-        <li class="tl" data-start="2026-11-02" data-end="2026-11-08"><div class="tl-top"><span class="tl-when">2–8 Nov</span><span class="tl-state"></span></div><h3>Diwali week</h3><p>Weekend demo classes at the centre. Society sessions continue around the holiday.</p></li>
-        <li class="tl" data-start="2026-11-09" data-end="2026-11-15"><div class="tl-top"><span class="tl-when">9–15 Nov</span><span class="tl-state"></span></div><h3>Launch week</h3><p>Open house at the centre, with demo classes all week.</p></li>
-        <li class="tl" data-start="2026-11-16" data-end="2026-11-22"><div class="tl-top"><span class="tl-when">16–22 Nov</span><span class="tl-state"></span></div><h3>Batches in session</h3><p>Weekend batches begin. School pilots start and parents see the first projects.</p></li>
-        <li class="tl" data-start="2026-11-23" data-end="2026-11-29"><div class="tl-top"><span class="tl-when">23–29 Nov</span><span class="tl-state"></span></div><h3>Full house</h3><p>The last seats close. Teacher cohort 1 and winter camp sign-ups open.</p></li>
-      </ol>
-      <p class="fineprint">School break dates vary around Diwali, so we confirm seminar dates with each school.</p>
     </div>
   </section>
 
@@ -1049,10 +1066,94 @@ address { font-style: normal; }
     });
   });
 
-  /* Header lifts once the page scrolls */
-  var header = $(".site-header");
-  function onScroll() { header.classList.toggle("scrolled", window.scrollY > 8); }
-  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
+  /* Scroll-linked touches: header shadow, progress bar, gear rotation (one rAF per frame) */
+  var header = $(".site-header"), bar = $("#progress-bar"), root = document.documentElement, ticking = false;
+  function onScroll() {
+    ticking = false;
+    var y = window.scrollY, max = Math.max(1, root.scrollHeight - window.innerHeight);
+    header.classList.toggle("scrolled", y > 8);
+    bar.style.transform = "scaleX(" + Math.min(1, y / max).toFixed(4) + ")";
+    if (!REDUCED) root.style.setProperty("--spin", (y * 0.22).toFixed(1) + "deg");
+  }
+  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  onScroll();
+
+  /* Hero parts tilt toward the pointer */
+  var partsBox = $(".parts"), partsGridEl = $("#parts");
+  if (!REDUCED && window.matchMedia("(hover: hover)").matches) {
+    partsBox.addEventListener("pointermove", function (e) {
+      var r = partsGridEl.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+      partsGridEl.style.setProperty("--ry", (x * 12).toFixed(2) + "deg");
+      partsGridEl.style.setProperty("--rx", (-y * 12).toFixed(2) + "deg");
+    });
+    partsBox.addEventListener("pointerleave", function () { partsGridEl.style.setProperty("--rx", "0deg"); partsGridEl.style.setProperty("--ry", "0deg"); });
+  }
+
+  /* Pointer glow on cards */
+  $$(".offer, .mandate, .week-card, .programme, .seat-board, .journey-panel, form.card").forEach(function (el) { el.classList.add("glow"); });
+  document.addEventListener("pointermove", function (e) {
+    var g = e.target.closest && e.target.closest(".glow"); if (!g) return;
+    var r = g.getBoundingClientRect();
+    g.style.setProperty("--mx", (e.clientX - r.left) + "px"); g.style.setProperty("--my", (e.clientY - r.top) + "px");
+  }, { passive: true });
+
+  /* Background: drifting nodes in the four part colours, joined like a circuit; reaches toward the pointer */
+  (function () {
+    var c = $("#bg-canvas"); if (!c || !c.getContext) return;
+    var ctx = c.getContext("2d"), W = 0, H = 0, nodes = [], cols = [], ink = "#2B1A10", t = 0, raf = 0;
+    var mouse = { x: -1e4, y: -1e4 }, LINK = 130, REACH = 180;
+    function readColors() {
+      var cs = getComputedStyle(root);
+      cols = ["--amber", "--rust", "--teal", "--plum"].map(function (v) { return cs.getPropertyValue(v).trim(); });
+      ink = cs.getPropertyValue("--ink").trim();
+    }
+    function size() {
+      var dpr = Math.min(2, window.devicePixelRatio || 1);
+      W = window.innerWidth; H = window.innerHeight;
+      c.width = Math.round(W * dpr); c.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var n = Math.round(Math.max(24, Math.min(72, W * H / 21000)));
+      nodes = [];
+      for (var i = 0; i < n; i++) nodes.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * 0.22, vy: (Math.random() - 0.5) * 0.22, r: 1.6 + Math.random() * 2.2, c: i % 4, sq: Math.random() < 0.3, ph: Math.random() * 6.28 });
+    }
+    function frame() {
+      t += 1;
+      ctx.clearRect(0, 0, W, H);
+      var off = (window.scrollY * 0.12) % H, pts = [];
+      for (var i = 0; i < nodes.length; i++) {
+        var n = nodes[i];
+        if (!REDUCED) { n.x += n.vx; n.y += n.vy; if (n.x < -10) n.x = W + 10; if (n.x > W + 10) n.x = -10; if (n.y < -10) n.y = H + 10; if (n.y > H + 10) n.y = -10; }
+        pts.push({ x: n.x, y: ((n.y - off) % H + H) % H, n: n });
+      }
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = ink;
+      for (i = 0; i < pts.length; i++) for (var j = i + 1; j < pts.length; j++) {
+        var dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y, d = Math.sqrt(dx * dx + dy * dy);
+        if (d < LINK) { ctx.globalAlpha = (1 - d / LINK) * 0.13; ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y); ctx.stroke(); }
+      }
+      for (i = 0; i < pts.length; i++) {
+        var p = pts[i], col = cols[p.n.c];
+        var mdx = p.x - mouse.x, mdy = p.y - mouse.y, md = Math.sqrt(mdx * mdx + mdy * mdy);
+        if (md < REACH) { ctx.globalAlpha = (1 - md / REACH) * 0.45; ctx.strokeStyle = col; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke(); }
+        var r = p.n.r * (REDUCED ? 1 : 1 + 0.25 * Math.sin(t * 0.03 + p.n.ph));
+        ctx.globalAlpha = md < REACH ? 0.85 : 0.5; ctx.fillStyle = col;
+        if (p.n.sq) { ctx.fillRect(p.x - r, p.y - r, r * 2, r * 2); } else { ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 6.2832); ctx.fill(); }
+      }
+      ctx.globalAlpha = 1;
+      if (!REDUCED) raf = requestAnimationFrame(frame);
+    }
+    function restart() { cancelAnimationFrame(raf); frame(); }
+    readColors(); size(); frame();
+    window.addEventListener("resize", function () { size(); restart(); });
+    if (REDUCED) window.addEventListener("scroll", function () { requestAnimationFrame(frame); }, { passive: true });
+    window.addEventListener("pointermove", function (e) { mouse.x = e.clientX; mouse.y = e.clientY; if (REDUCED) requestAnimationFrame(frame); }, { passive: true });
+    document.addEventListener("pointerleave", function () { mouse.x = mouse.y = -1e4; });
+    document.addEventListener("visibilitychange", function () { if (document.hidden) cancelAnimationFrame(raf); else if (!REDUCED) restart(); });
+    var mq = window.matchMedia("(prefers-color-scheme: dark)");
+    if (mq.addEventListener) mq.addEventListener("change", function () { readColors(); restart(); });
+    new MutationObserver(function () { readColors(); restart(); }).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+  })();
+
 
   /* Scroll spy */
   var navLinks = $$('.nav a[href^="#"]:not(.btn)');
@@ -1214,17 +1315,6 @@ address { font-style: normal; }
       if (e.key === "ArrowRight") { e.preventDefault(); selectTab(tabs[(i + 1) % tabs.length], true); }
       if (e.key === "ArrowLeft") { e.preventDefault(); selectTab(tabs[(i + tabs.length - 1) % tabs.length], true); }
     });
-  });
-
-  /* Opening timeline: mark past, current and next week by today's date */
-  var now = new Date(); now.setHours(12, 0, 0, 0);
-  var nextMarked = false;
-  $$("#timeline .tl").forEach(function (li) {
-    var s = new Date(li.dataset.start + "T00:00:00"), e = new Date(li.dataset.end + "T23:59:59");
-    var st = $(".tl-state", li);
-    if (now > e) { li.classList.add("is-done"); st.textContent = "Done"; }
-    else if (now >= s) { li.classList.add("is-now"); st.textContent = "This week"; nextMarked = true; }
-    else if (!nextMarked) { li.classList.add("is-next"); st.textContent = "Up next"; nextMarked = true; }
   });
 
   /* Enquiry form */
