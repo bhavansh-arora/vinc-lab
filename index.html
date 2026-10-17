@@ -524,21 +524,35 @@ address { font-style: normal; }
 @keyframes blink { 50% { opacity: .2; } }
 @keyframes eyes { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
 
-/* Why now: a robot arm picks up a block and sets it down */
-.arm { width: 190px; height: 190px; top: clamp(20px, 3vw, 44px); right: max(16px, calc((100% - var(--wrap)) / 2 + 8px)); opacity: .9; }
-.arm-upper { transform-origin: 100px 154px; animation: arm-up 7s ease-in-out infinite; }
-.arm-fore { transform-origin: 100px 86px; animation: arm-fore 7s ease-in-out infinite; }
-.arm-grip { transform-origin: 160px 86px; animation: arm-grip 7s ease-in-out infinite; }
-.finger { animation: 7s ease-in-out infinite; }
-.fl { animation-name: finger-l; } .fr { animation-name: finger-r; }
-.cube { fill: var(--teal); animation: cube 7s ease-in-out infinite; }
-.arm .led { fill: var(--teal); animation: blink 1.6s ease-in-out infinite; }
-@keyframes arm-up { 0%, 100% { transform: rotate(-22deg); } 50% { transform: rotate(16deg); } }
-@keyframes arm-fore { 0%, 100% { transform: rotate(28deg); } 50% { transform: rotate(-18deg); } }
-@keyframes arm-grip { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(2deg); } }
-@keyframes finger-l { 0%, 44%, 60%, 100% { transform: translateX(0); } 50%, 54% { transform: translateX(-3px); } }
-@keyframes finger-r { 0%, 44%, 60%, 100% { transform: translateX(0); } 50%, 54% { transform: translateX(3px); } }
-@keyframes cube { 0%, 49% { opacity: 1; } 51%, 98% { opacity: 0; } 100% { opacity: 1; } }
+/* Why now: a robot arm takes blocks off a conveyor and builds a stack of four, then starts again */
+.factory { width: 300px; height: 230px; top: clamp(16px, 3vw, 40px); right: max(16px, calc((100% - var(--wrap)) / 2)); }
+.factory .floor { fill: var(--line); }
+.belt-run { stroke: var(--paper); stroke-width: 2; stroke-dasharray: 5 6; animation: belt-run .8s linear infinite; }
+.roller { fill: var(--paper-2); stroke: var(--ink); stroke-width: 1.5; }
+.factory .screen { fill: var(--paper-2); }
+.factory .led { fill: var(--teal); animation: blink 1.2s ease-in-out infinite; }
+.factory .l2 { fill: var(--amber); animation-delay: .6s; }
+.fx-up { transform-origin: 172px 150px; animation: fx-up 28s ease-in-out infinite; }
+.fx-fore { transform-origin: 172px 80px; animation: fx-fore 28s ease-in-out infinite; }
+.fx-grip { transform-origin: 238px 80px; animation: fx-grip 28s ease-in-out infinite; }
+.fx-fl { animation: fx-fl 28s ease-in-out infinite; } .fx-fr { animation: fx-fr 28s ease-in-out infinite; }
+.fx-held { animation: fx-held 28s linear infinite; }
+.belt-block { animation: fx-belt 28s ease-in-out infinite; }
+.stk { opacity: 0; } .s0 { animation: fx-s0 28s linear infinite; } .s1 { animation: fx-s1 28s linear infinite; } .s2 { animation: fx-s2 28s linear infinite; } .s3 { animation: fx-s3 28s linear infinite; }
+@keyframes belt-run { to { stroke-dashoffset: -11; } }
+@keyframes fx-up { 0% { transform: rotate(-39.02deg); } 2% { transform: rotate(-51.77deg); } 3.5% { transform: rotate(-51.77deg); } 5.5% { transform: rotate(-39.02deg); } 9% { transform: rotate(46.97deg); } 12.5% { transform: rotate(34.92deg); } 14.5% { transform: rotate(55.52deg); } 16% { transform: rotate(55.52deg); } 18% { transform: rotate(34.92deg); } 21.5% { transform: rotate(46.97deg); } 25% { transform: rotate(-39.02deg); } 27% { transform: rotate(-51.77deg); } 28.5% { transform: rotate(-51.77deg); } 30.5% { transform: rotate(-39.02deg); } 34% { transform: rotate(46.97deg); } 37.5% { transform: rotate(26.41deg); } 39.5% { transform: rotate(43.97deg); } 41% { transform: rotate(43.97deg); } 43% { transform: rotate(26.41deg); } 46.5% { transform: rotate(46.97deg); } 50% { transform: rotate(-39.02deg); } 52% { transform: rotate(-51.77deg); } 53.5% { transform: rotate(-51.77deg); } 55.5% { transform: rotate(-39.02deg); } 59% { transform: rotate(46.97deg); } 62.5% { transform: rotate(20.38deg); } 64.5% { transform: rotate(33.74deg); } 66% { transform: rotate(33.74deg); } 68% { transform: rotate(20.38deg); } 71.5% { transform: rotate(46.97deg); } 75% { transform: rotate(-39.02deg); } 77% { transform: rotate(-51.77deg); } 78.5% { transform: rotate(-51.77deg); } 80.5% { transform: rotate(-39.02deg); } 84% { transform: rotate(46.97deg); } 87.5% { transform: rotate(17.12deg); } 89.5% { transform: rotate(25.52deg); } 91% { transform: rotate(25.52deg); } 93% { transform: rotate(17.12deg); } 96.5% { transform: rotate(46.97deg); } 100% { transform: rotate(-39.02deg); } }
+@keyframes fx-fore { 0% { transform: rotate(204.64deg); } 2% { transform: rotate(195.21deg); } 3.5% { transform: rotate(195.21deg); } 5.5% { transform: rotate(204.64deg); } 9% { transform: rotate(166.33deg); } 12.5% { transform: rotate(10.98deg); } 14.5% { transform: rotate(9.09deg); } 16% { transform: rotate(9.09deg); } 18% { transform: rotate(10.98deg); } 21.5% { transform: rotate(166.33deg); } 25% { transform: rotate(204.64deg); } 27% { transform: rotate(195.21deg); } 28.5% { transform: rotate(195.21deg); } 30.5% { transform: rotate(204.64deg); } 34% { transform: rotate(166.33deg); } 37.5% { transform: rotate(7.36deg); } 39.5% { transform: rotate(11.51deg); } 41% { transform: rotate(11.51deg); } 43% { transform: rotate(7.36deg); } 46.5% { transform: rotate(166.33deg); } 50% { transform: rotate(204.64deg); } 52% { transform: rotate(195.21deg); } 53.5% { transform: rotate(195.21deg); } 55.5% { transform: rotate(204.64deg); } 59% { transform: rotate(166.33deg); } 62.5% { transform: rotate(0.60deg); } 64.5% { transform: rotate(10.70deg); } 66% { transform: rotate(10.70deg); } 68% { transform: rotate(0.60deg); } 71.5% { transform: rotate(166.33deg); } 75% { transform: rotate(204.64deg); } 77% { transform: rotate(195.21deg); } 78.5% { transform: rotate(195.21deg); } 80.5% { transform: rotate(204.64deg); } 84% { transform: rotate(166.33deg); } 87.5% { transform: rotate(-9.37deg); } 89.5% { transform: rotate(6.69deg); } 91% { transform: rotate(6.69deg); } 93% { transform: rotate(-9.37deg); } 96.5% { transform: rotate(166.33deg); } 100% { transform: rotate(204.64deg); } }
+@keyframes fx-grip { 0% { transform: rotate(-165.62deg); } 2% { transform: rotate(-143.44deg); } 3.5% { transform: rotate(-143.44deg); } 5.5% { transform: rotate(-165.62deg); } 9% { transform: rotate(-213.29deg); } 12.5% { transform: rotate(-45.90deg); } 14.5% { transform: rotate(-64.61deg); } 16% { transform: rotate(-64.61deg); } 18% { transform: rotate(-45.90deg); } 21.5% { transform: rotate(-213.29deg); } 25% { transform: rotate(-165.62deg); } 27% { transform: rotate(-143.44deg); } 28.5% { transform: rotate(-143.44deg); } 30.5% { transform: rotate(-165.62deg); } 34% { transform: rotate(-213.29deg); } 37.5% { transform: rotate(-33.78deg); } 39.5% { transform: rotate(-55.48deg); } 41% { transform: rotate(-55.48deg); } 43% { transform: rotate(-33.78deg); } 46.5% { transform: rotate(-213.29deg); } 50% { transform: rotate(-165.62deg); } 52% { transform: rotate(-143.44deg); } 53.5% { transform: rotate(-143.44deg); } 55.5% { transform: rotate(-165.62deg); } 59% { transform: rotate(-213.29deg); } 62.5% { transform: rotate(-380.97deg); } 64.5% { transform: rotate(-404.44deg); } 66% { transform: rotate(-404.44deg); } 68% { transform: rotate(-380.97deg); } 71.5% { transform: rotate(-213.29deg); } 75% { transform: rotate(-165.62deg); } 77% { transform: rotate(-143.44deg); } 78.5% { transform: rotate(-143.44deg); } 80.5% { transform: rotate(-165.62deg); } 84% { transform: rotate(-213.29deg); } 87.5% { transform: rotate(-367.75deg); } 89.5% { transform: rotate(-392.20deg); } 91% { transform: rotate(-392.20deg); } 93% { transform: rotate(-367.75deg); } 96.5% { transform: rotate(-213.29deg); } 100% { transform: rotate(-165.62deg); } }
+@keyframes fx-fl { 0% { transform: translateX(-3px); } 2.5% { transform: translateX(-3px); } 3.5% { transform: translateX(0); } 15% { transform: translateX(0); } 16% { transform: translateX(-3px); } 25% { transform: translateX(-3px); } 27.5% { transform: translateX(-3px); } 28.5% { transform: translateX(0); } 40% { transform: translateX(0); } 41% { transform: translateX(-3px); } 50% { transform: translateX(-3px); } 52.5% { transform: translateX(-3px); } 53.5% { transform: translateX(0); } 65% { transform: translateX(0); } 66% { transform: translateX(-3px); } 75% { transform: translateX(-3px); } 77.5% { transform: translateX(-3px); } 78.5% { transform: translateX(0); } 90% { transform: translateX(0); } 91% { transform: translateX(-3px); } 100% { transform: translateX(-3px); } }
+@keyframes fx-fr { 0% { transform: translateX(3px); } 2.5% { transform: translateX(3px); } 3.5% { transform: translateX(0); } 15% { transform: translateX(0); } 16% { transform: translateX(3px); } 25% { transform: translateX(3px); } 27.5% { transform: translateX(3px); } 28.5% { transform: translateX(0); } 40% { transform: translateX(0); } 41% { transform: translateX(3px); } 50% { transform: translateX(3px); } 52.5% { transform: translateX(3px); } 53.5% { transform: translateX(0); } 65% { transform: translateX(0); } 66% { transform: translateX(3px); } 75% { transform: translateX(3px); } 77.5% { transform: translateX(3px); } 78.5% { transform: translateX(0); } 90% { transform: translateX(0); } 91% { transform: translateX(3px); } 100% { transform: translateX(3px); } }
+@keyframes fx-held { 0% { opacity: 0; fill: var(--amber); } 3.375% { opacity: 0; fill: var(--amber); } 3.5% { opacity: 1; fill: var(--amber); } 15.875% { opacity: 1; fill: var(--amber); } 16% { opacity: 0; fill: var(--amber); } 25% { opacity: 0; fill: var(--rust); } 28.375% { opacity: 0; fill: var(--rust); } 28.5% { opacity: 1; fill: var(--rust); } 40.875% { opacity: 1; fill: var(--rust); } 41% { opacity: 0; fill: var(--rust); } 50% { opacity: 0; fill: var(--teal); } 53.375% { opacity: 0; fill: var(--teal); } 53.5% { opacity: 1; fill: var(--teal); } 65.875% { opacity: 1; fill: var(--teal); } 66% { opacity: 0; fill: var(--teal); } 75% { opacity: 0; fill: var(--plum); } 78.375% { opacity: 0; fill: var(--plum); } 78.5% { opacity: 1; fill: var(--plum); } 90.875% { opacity: 1; fill: var(--plum); } 91% { opacity: 0; fill: var(--plum); } 100% { opacity: 0; } }
+@keyframes fx-belt { 0% { opacity: 1; transform: translateX(0); fill: var(--amber); } 3.375% { opacity: 1; transform: translateX(0); fill: var(--amber); } 3.5% { opacity: 0; transform: translateX(-60px); fill: var(--rust); } 16.5% { opacity: 0; transform: translateX(-60px); fill: var(--rust); } 18% { opacity: 1; transform: translateX(-50px); fill: var(--rust); } 24% { opacity: 1; transform: translateX(0); fill: var(--rust); } 25% { opacity: 1; transform: translateX(0); fill: var(--rust); } 28.375% { opacity: 1; transform: translateX(0); fill: var(--rust); } 28.5% { opacity: 0; transform: translateX(-60px); fill: var(--teal); } 41.5% { opacity: 0; transform: translateX(-60px); fill: var(--teal); } 43% { opacity: 1; transform: translateX(-50px); fill: var(--teal); } 49% { opacity: 1; transform: translateX(0); fill: var(--teal); } 50% { opacity: 1; transform: translateX(0); fill: var(--teal); } 53.375% { opacity: 1; transform: translateX(0); fill: var(--teal); } 53.5% { opacity: 0; transform: translateX(-60px); fill: var(--plum); } 66.5% { opacity: 0; transform: translateX(-60px); fill: var(--plum); } 68% { opacity: 1; transform: translateX(-50px); fill: var(--plum); } 74% { opacity: 1; transform: translateX(0); fill: var(--plum); } 75% { opacity: 1; transform: translateX(0); fill: var(--plum); } 78.375% { opacity: 1; transform: translateX(0); fill: var(--plum); } 78.5% { opacity: 0; transform: translateX(-60px); fill: var(--amber); } 91.5% { opacity: 0; transform: translateX(-60px); fill: var(--amber); } 93% { opacity: 1; transform: translateX(-50px); fill: var(--amber); } 99% { opacity: 1; transform: translateX(0); fill: var(--amber); } 100% { opacity: 1; transform: translateX(0); fill: var(--amber); } }
+@keyframes fx-s0 { 0% { opacity: 0; } 15.95% { opacity: 0; } 16% { opacity: 1; } 96.5% { opacity: 1; } 99% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes fx-s1 { 0% { opacity: 0; } 40.95% { opacity: 0; } 41% { opacity: 1; } 96.5% { opacity: 1; } 99% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes fx-s2 { 0% { opacity: 0; } 65.95% { opacity: 0; } 66% { opacity: 1; } 96.5% { opacity: 1; } 99% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes fx-s3 { 0% { opacity: 0; } 90.95% { opacity: 0; } 91% { opacity: 1; } 96.5% { opacity: 1; } 99% { opacity: 0; } 100% { opacity: 0; } }
+@media (max-width: 1100px) { .factory { display: none; } }
+@media (prefers-reduced-motion: reduce) { .stk { opacity: 1; } .fx-held { opacity: 0; } }
 
 /* The week: a little rover drives up and down its lane */
 .rover-lane { position: relative; height: 78px; margin-top: 28px; }
@@ -583,10 +597,64 @@ address { font-style: normal; }
 @keyframes fly { 0% { offset-distance: 0%; opacity: 0; } 8% { opacity: 1; } 86% { opacity: 1; } 100% { offset-distance: 100%; opacity: 0; } }
 
 @media (max-width: 1180px) { .drone { display: none; } }
-@media (max-width: 1100px) { .arm { display: none; } }
 @media (max-width: 1000px) { .circuit { display: none; } }
 @media (max-width: 680px) { .rover-lane { height: 62px; } .rover { width: 74px; height: 62px; } @keyframes drive { 0% { left: 0; transform: scaleX(1); } 46% { left: calc(100% - 74px); transform: scaleX(1); } 50% { left: calc(100% - 74px); transform: scaleX(-1); } 96% { left: 0; transform: scaleX(-1); } 100% { left: 0; transform: scaleX(1); } } }
-@media (prefers-reduced-motion: reduce) { .plane { offset-distance: 60%; opacity: 1; } .cube { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .plane { offset-distance: 60%; opacity: 1; } }
+
+/* How a quarter works: demo day, a student presents a robot while the audience claps */
+.demo-day { margin: 36px 0 0; max-width: 460px; display: grid; gap: 10px; }
+.demo-day svg { width: 100%; height: auto; display: block; }
+.demo-day figcaption { font-family: var(--mono); font-size: var(--t-label); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.dd-stage { fill: color-mix(in srgb, var(--amber) 45%, var(--paper-2)); }
+.dd-panel { fill: var(--card); stroke: var(--ink); stroke-width: 3; }
+.dd-panel-fill { fill: var(--card); }
+.dd-post { fill: var(--ink); opacity: .8; }
+.dd-title { font-family: var(--mono); font-size: 15px; font-weight: 500; letter-spacing: .12em; fill: var(--amber-ink); }
+.dd-sub { font-family: var(--body); font-size: 12px; fill: var(--muted); }
+.dd-bar { transform-box: fill-box; transform-origin: 50% 100%; animation: dd-bars 4.8s ease-in-out infinite; }
+.dd-bar.b1 { fill: var(--amber); } .dd-bar.b2 { fill: var(--rust); animation-delay: .15s; } .dd-bar.b3 { fill: var(--teal); animation-delay: .3s; } .dd-bar.b4 { fill: var(--plum); animation-delay: .45s; }
+.dd-line { stroke: var(--ink); stroke-width: 2; stroke-dasharray: 2 3; opacity: .5; }
+.dd-bot { animation: dd-drive 5s ease-in-out infinite; }
+.dd-skin { fill: #C98B5F; }
+.dd-hair { fill: #2B1A10; }
+.dd-pants { fill: var(--ink); opacity: .85; }
+.dd-smile { fill: none; stroke: #2B1A10; stroke-width: 2; stroke-linecap: round; }
+.dd-kid { animation: dd-sway 4.8s ease-in-out infinite; transform-origin: 150px 214px; }
+.dd-point { transform-origin: 162px 120px; animation: dd-point 4.8s ease-in-out infinite; }
+.dd-wave { transform-origin: 130px 120px; animation: dd-wave 4.8s ease-in-out infinite; }
+.dd-eyes { transform-origin: 150px 96px; animation: eyes 4s ease-in-out infinite; }
+.dd-bubble { transform-origin: 120px 60px; animation: dd-pop 14.4s ease-in-out infinite; }
+.dd-say { font-family: var(--body); font-size: 14px; font-weight: 700; fill: var(--ink); opacity: 0; animation: dd-say 14.4s linear infinite; }
+.dd-say.s2 { animation-delay: 4.8s; } .dd-say.s3 { animation-delay: 9.6s; }
+.dd-confetti rect { transform-box: fill-box; transform-origin: center; animation: dd-fall 6s linear infinite; opacity: 0; }
+.dd-confetti rect:nth-child(2) { animation-delay: .7s; } .dd-confetti rect:nth-child(3) { animation-delay: 1.5s; } .dd-confetti rect:nth-child(4) { animation-delay: 2.3s; }
+.dd-confetti rect:nth-child(5) { animation-delay: 3.1s; } .dd-confetti rect:nth-child(6) { animation-delay: 3.9s; } .dd-confetti rect:nth-child(7) { animation-delay: 4.6s; } .dd-confetti rect:nth-child(8) { animation-delay: 5.3s; }
+.dd-p { animation: dd-bob 2.4s ease-in-out infinite; }
+.dd-p.p2 { animation-delay: .3s; } .dd-p.p3 { animation-delay: .9s; } .dd-p.p4 { animation-delay: .5s; } .dd-p.p5 { animation-delay: 1.2s; } .dd-p.p6 { animation-delay: .7s; }
+.clap { fill: none; stroke: var(--amber); stroke-width: 2.5; stroke-linecap: round; opacity: 0; animation: dd-clap 2.4s ease-out infinite; }
+.clap.c2 { animation-delay: .8s; } .clap.c3 { animation-delay: 1.6s; }
+@keyframes dd-bars { 0%, 100% { transform: scaleY(.35); } 40%, 70% { transform: scaleY(1); } }
+@keyframes dd-drive { 0%, 100% { transform: translateX(-12px); } 50% { transform: translateX(14px); } }
+@keyframes dd-sway { 0%, 100% { transform: rotate(-1deg); } 50% { transform: rotate(1.5deg); } }
+@keyframes dd-point { 0%, 100% { transform: rotate(-38deg); } 45%, 60% { transform: rotate(-8deg); } }
+@keyframes dd-wave { 0%, 100% { transform: rotate(8deg); } 50% { transform: rotate(-4deg); } }
+@keyframes dd-pop { 0%, 30%, 33.3%, 63%, 66.6%, 96%, 100% { transform: scale(1); } 1.5%, 34.8%, 68.1% { transform: scale(1.06); } }
+@keyframes dd-say { 0% { opacity: 0; } 2%, 31% { opacity: 1; } 33.3%, 100% { opacity: 0; } }
+@keyframes dd-fall { 0% { transform: translateY(-10px) rotate(0); opacity: 0; } 10% { opacity: .9; } 80% { opacity: .9; } 100% { transform: translateY(190px) rotate(320deg); opacity: 0; } }
+@keyframes dd-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+@keyframes dd-clap { 0%, 50%, 100% { opacity: 0; transform: translateY(0); } 15% { opacity: 1; } 40% { opacity: 0; transform: translateY(-6px); } }
+@media (prefers-reduced-motion: reduce) { .dd-say.s1 { opacity: 1; } }
+
+/* Bigger gear train for the weekend programmes, three gears that keep turning and speed up with scroll */
+.gears.gear-train { width: 380px; height: 380px; top: clamp(28px, 4vw, 60px); }
+.gears.gear-train .g-big { width: 230px; height: 230px; left: 150px; top: 0; right: auto; }
+.gears.gear-train .g-small { width: 140px; height: 140px; left: 80px; top: 142px; right: auto; transform: rotate(calc(var(--spin, 0deg) * -1.667 + 16deg)); }
+.gears.gear-train .g-third { width: 112px; height: 112px; left: 226px; top: 195px; transform: rotate(calc(var(--spin, 0deg) * -1.25 + 10deg)); }
+.gears.gear-train .gear { opacity: .26; }
+.gear-in { animation: spin 40s linear infinite; transform-origin: 0 0; }
+.g-small .gear-in { animation-duration: 24s; animation-direction: reverse; }
+.g-third .gear-in { animation-duration: 32s; animation-direction: reverse; }
+@media (max-width: 1100px) { .gears.gear-train { transform: scale(.7); transform-origin: top right; } }
 
 /* Footer colour bar draws in */
 #foot-parts i { transform-origin: left center; }
@@ -698,23 +766,37 @@ address { font-style: normal; }
 
   <!-- Why now -->
   <section id="why" class="deco-host" aria-labelledby="why-title">
-    <svg class="deco arm" viewBox="0 0 200 200" aria-hidden="true">
-      <rect x="44" y="178" width="112" height="12" rx="5" class="f-ink"/>
-      <rect x="86" y="152" width="28" height="28" rx="6" class="f-ink"/>
-      <circle class="led" cx="100" cy="184" r="2.6"/>
-      <g class="arm-upper">
-        <rect x="92" y="80" width="16" height="76" rx="8" class="f-amber"/>
-        <g class="arm-fore">
-          <rect x="96" y="78" width="66" height="16" rx="8" class="f-amber"/>
-          <g class="arm-grip">
-            <rect x="152" y="88" width="16" height="10" rx="2" class="f-ink"/>
-            <rect class="finger fl f-ink" x="150" y="96" width="5" height="17" rx="2"/>
-            <rect class="finger fr f-ink" x="165" y="96" width="5" height="17" rx="2"/>
-            <rect class="cube" x="154" y="104" width="12" height="12" rx="2"/>
+    <svg class="deco factory" viewBox="0 0 300 230" aria-hidden="true">
+      <rect x="0" y="212" width="300" height="3" rx="1.5" class="floor"/>
+      <g class="belt">
+        <rect x="6" y="176" width="78" height="14" rx="7" class="f-ink"/>
+        <line x1="13" y1="179" x2="77" y2="179" class="belt-run"/>
+        <circle cx="16" cy="183" r="4.5" class="roller"/><circle cx="45" cy="183" r="4.5" class="roller"/><circle cx="74" cy="183" r="4.5" class="roller"/>
+        <rect x="16" y="190" width="5" height="22" class="f-ink"/><rect x="69" y="190" width="5" height="22" class="f-ink"/>
+      </g>
+      <rect class="belt-block" x="56" y="160" width="16" height="16" rx="3"/>
+      <rect x="226" y="200" width="64" height="8" rx="3" class="f-ink"/><rect x="232" y="208" width="6" height="4" class="f-ink"/><rect x="278" y="208" width="6" height="4" class="f-ink"/>
+      <rect class="stk s0" x="250" y="184" width="16" height="16" rx="3" style="fill:var(--amber)"/>
+      <rect class="stk s1" x="250" y="168" width="16" height="16" rx="3" style="fill:var(--rust)"/>
+      <rect class="stk s2" x="250" y="152" width="16" height="16" rx="3" style="fill:var(--teal)"/>
+      <rect class="stk s3" x="250" y="136" width="16" height="16" rx="3" style="fill:var(--plum)"/>
+      <rect x="146" y="196" width="52" height="16" rx="5" class="f-ink"/>
+      <rect x="160" y="152" width="24" height="46" rx="6" class="f-ink"/>
+      <rect x="164" y="176" width="16" height="10" rx="2" class="screen"/>
+      <circle class="led" cx="168" cy="181" r="2"/><circle class="led l2" cx="176" cy="181" r="2"/>
+      <g class="fx-up">
+        <rect x="164" y="78" width="16" height="74" rx="8" class="f-amber"/>
+        <g class="fx-fore">
+          <rect x="168" y="73" width="74" height="14" rx="7" class="f-amber"/>
+          <g class="fx-grip">
+            <rect x="229" y="80" width="18" height="9" rx="2" class="f-ink"/>
+            <rect class="fx-held" x="230" y="94" width="16" height="16" rx="3"/>
+            <rect class="fx-fl f-ink" x="227" y="86" width="4" height="22" rx="2"/>
+            <rect class="fx-fr f-ink" x="245" y="86" width="4" height="22" rx="2"/>
           </g>
-          <circle cx="100" cy="86" r="9" class="f-rust"/>
+          <circle cx="172" cy="80" r="8" class="f-rust"/>
         </g>
-        <circle cx="100" cy="154" r="11" class="f-rust"/>
+        <circle cx="172" cy="150" r="10" class="f-rust"/>
       </g>
     </svg>
     <div class="wrap">
@@ -750,7 +832,7 @@ address { font-style: normal; }
 
   <!-- Programmes -->
   <section id="programmes" class="band-alt has-gears" aria-labelledby="prog-title">
-    <div class="gears" aria-hidden="true"><svg class="gear g-big" viewBox="-50 -50 100 100" aria-hidden="true" style="color:var(--amber)"><g fill="currentColor"><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(0)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(36)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(72)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(108)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(144)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(180)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(216)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(252)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(288)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(324)"/></g><circle r="30" fill="none" stroke="currentColor" stroke-width="11"/><circle r="7" fill="currentColor"/></svg><svg class="gear g-small" viewBox="-50 -50 100 100" aria-hidden="true" style="color:var(--rust)"><g fill="currentColor"><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(0)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(60)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(120)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(180)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(240)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(300)"/></g><circle r="30" fill="none" stroke="currentColor" stroke-width="11"/><circle r="7" fill="currentColor"/></svg></div>
+    <div class="gears gear-train" aria-hidden="true"><svg class="gear g-big" viewBox="-50 -50 100 100" aria-hidden="true" style="color:var(--amber)"><g class="gear-in"><g fill="currentColor"><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(0)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(36)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(72)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(108)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(144)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(180)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(216)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(252)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(288)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(324)"/></g><circle r="30" fill="none" stroke="currentColor" stroke-width="11"/><circle r="7" fill="currentColor"/></g></svg><svg class="gear g-small" viewBox="-50 -50 100 100" aria-hidden="true" style="color:var(--rust)"><g class="gear-in"><g fill="currentColor"><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(0)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(60)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(120)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(180)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(240)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(300)"/></g><circle r="30" fill="none" stroke="currentColor" stroke-width="11"/><circle r="7" fill="currentColor"/></g></svg><svg class="gear g-third" viewBox="-50 -50 100 100" aria-hidden="true" style="color:var(--teal)"><g class="gear-in"><g fill="currentColor"><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(0)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(45)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(90)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(135)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(180)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(225)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(270)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(315)"/></g><circle r="30" fill="none" stroke="currentColor" stroke-width="11"/><circle r="7" fill="currentColor"/></g></svg></div>
     <div class="wrap">
       <div class="section-head reveal">
         <p class="label">Weekends · Grades 6–12</p>
@@ -915,6 +997,69 @@ address { font-style: normal; }
           <li><div><h3>Project portfolio</h3><p>Every project documented, from first idea to finished work.</p></div></li>
           <li><div><h3>Skills report card</h3><p>A clear quarterly picture of what your child can now do.</p></div></li>
         </ol>
+        <figure class="demo-day reveal">
+          <svg viewBox="0 0 400 290" role="img" aria-label="A student presents a small robot to parents on demo day">
+            <rect x="12" y="214" width="376" height="12" rx="6" class="dd-stage"/>
+            <g class="dd-screen">
+              <rect x="176" y="22" width="206" height="128" rx="10" class="dd-panel"/>
+              <text x="194" y="48" class="dd-title">DEMO DAY</text>
+              <text x="194" y="66" class="dd-sub">Line-following robot</text>
+              <rect class="dd-bar b1" x="198" y="102" width="26" height="34" rx="3"/>
+              <rect class="dd-bar b2" x="236" y="88" width="26" height="48" rx="3"/>
+              <rect class="dd-bar b3" x="274" y="74" width="26" height="62" rx="3"/>
+              <rect class="dd-bar b4" x="312" y="60" width="26" height="76" rx="3"/>
+              <rect x="268" y="150" width="20" height="64" class="dd-post"/>
+            </g>
+            <rect x="26" y="166" width="96" height="8" rx="3" class="f-ink"/>
+            <rect x="36" y="174" width="6" height="40" class="f-ink"/><rect x="106" y="174" width="6" height="40" class="f-ink"/>
+            <path d="M34 162 H114" class="dd-line"/>
+            <g class="dd-bot">
+              <line x1="74" y1="128" x2="74" y2="138" class="s-ink"/><circle cx="74" cy="126" r="3.5" class="led-rust"/>
+              <rect x="56" y="137" width="36" height="24" rx="7" class="f-teal"/>
+              <rect x="62" y="142" width="24" height="11" rx="4" class="f-ink"/>
+              <circle cx="69" cy="147.5" r="2.4" class="f-amber"/><circle cx="79" cy="147.5" r="2.4" class="f-amber"/>
+              <circle cx="62" cy="163" r="4" class="f-ink"/><circle cx="86" cy="163" r="4" class="f-ink"/>
+            </g>
+            <g class="dd-kid">
+              <rect x="138" y="168" width="9" height="46" rx="4" class="dd-pants"/><rect x="152" y="168" width="9" height="46" rx="4" class="dd-pants"/>
+              <rect x="132" y="112" width="36" height="62" rx="13" class="f-rust"/>
+              <rect x="138" y="124" width="12" height="8" rx="2" class="f-amber"/>
+              <g class="dd-wave"><rect x="126" y="118" width="9" height="34" rx="4.5" class="f-rust"/><circle cx="130.5" cy="153" r="5" class="dd-skin"/></g>
+              <g class="dd-point"><rect x="160" y="116" width="34" height="9" rx="4.5" class="f-rust"/><circle cx="195" cy="120.5" r="5" class="dd-skin"/></g>
+              <circle cx="150" cy="94" r="17" class="dd-skin"/>
+              <path d="M133 92 C 133 74, 167 72, 167 90 C 160 84, 146 82, 133 92 Z" class="dd-hair"/>
+              <g class="dd-eyes"><circle cx="144" cy="96" r="2" class="dd-hair"/><circle cx="156" cy="96" r="2" class="dd-hair"/></g>
+              <path d="M144 103 Q 150 108 156 103" class="dd-smile"/>
+            </g>
+            <g class="dd-bubble">
+              <rect x="10" y="20" width="132" height="40" rx="14" class="dd-panel"/>
+              <path d="M110 59 L 126 74 L 120 58 Z" class="dd-panel-fill"/>
+              <text x="76" y="45" text-anchor="middle" class="dd-say s1">Meet my robot!</text>
+              <text x="76" y="45" text-anchor="middle" class="dd-say s2">It follows a line.</text>
+              <text x="76" y="45" text-anchor="middle" class="dd-say s3">Any questions?</text>
+            </g>
+            <g class="dd-confetti">
+              <rect x="200" y="0" width="5" height="9" rx="1" style="fill:var(--amber)"/><rect x="240" y="0" width="5" height="9" rx="1" style="fill:var(--teal)"/>
+              <rect x="280" y="0" width="5" height="9" rx="1" style="fill:var(--plum)"/><rect x="320" y="0" width="5" height="9" rx="1" style="fill:var(--rust)"/>
+              <rect x="360" y="0" width="5" height="9" rx="1" style="fill:var(--olive)"/><rect x="220" y="0" width="5" height="9" rx="1" style="fill:var(--rust)"/>
+              <rect x="300" y="0" width="5" height="9" rx="1" style="fill:var(--amber)"/><rect x="340" y="0" width="5" height="9" rx="1" style="fill:var(--teal)"/>
+            </g>
+            <g class="dd-crowd">
+              <g class="dd-p p1"><circle cx="40" cy="250" r="12" class="f-ink"/><ellipse cx="40" cy="282" rx="25" ry="20" style="fill:var(--amber)"/></g>
+              <g class="dd-p p2"><circle cx="102" cy="246" r="13" class="f-ink"/><ellipse cx="102" cy="280" rx="27" ry="21" style="fill:var(--teal)"/></g>
+              <g class="dd-p p3"><circle cx="166" cy="252" r="11" class="f-ink"/><ellipse cx="166" cy="283" rx="23" ry="19" style="fill:var(--plum)"/></g>
+              <g class="dd-p p4"><circle cx="228" cy="248" r="12" class="f-ink"/><ellipse cx="228" cy="281" rx="26" ry="20" style="fill:var(--olive)"/></g>
+              <g class="dd-p p5"><circle cx="292" cy="251" r="12" class="f-ink"/><ellipse cx="292" cy="282" rx="25" ry="20" style="fill:var(--rust)"/></g>
+              <g class="dd-p p6"><circle cx="356" cy="247" r="13" class="f-ink"/><ellipse cx="356" cy="281" rx="27" ry="21" style="fill:var(--amber)"/></g>
+            </g>
+            <g class="dd-claps">
+              <path class="clap c1" d="M102 222 l3 -8 l3 8 M96 226 l-7 -4 M114 226 l7 -4"/>
+              <path class="clap c2" d="M228 224 l3 -8 l3 8 M222 228 l-7 -4 M240 228 l7 -4"/>
+              <path class="clap c3" d="M356 222 l3 -8 l3 8 M350 226 l-7 -4 M368 226 l7 -4"/>
+            </g>
+          </svg>
+          <figcaption>Demo day · every quarter ends with students presenting their projects</figcaption>
+        </figure>
       </div>
       <div class="seat-board reveal" id="seat-board">
         <div class="sb-head">
@@ -949,7 +1094,7 @@ address { font-style: normal; }
 
   <!-- Free start journey -->
   <section id="start" class="has-gears" aria-labelledby="start-title">
-    <div class="gears" aria-hidden="true"><svg class="gear g-big" viewBox="-50 -50 100 100" aria-hidden="true" style="color:var(--teal)"><g fill="currentColor"><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(0)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(36)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(72)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(108)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(144)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(180)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(216)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(252)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(288)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(324)"/></g><circle r="30" fill="none" stroke="currentColor" stroke-width="11"/><circle r="7" fill="currentColor"/></svg><svg class="gear g-small" viewBox="-50 -50 100 100" aria-hidden="true" style="color:var(--plum)"><g fill="currentColor"><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(0)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(60)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(120)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(180)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(240)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(300)"/></g><circle r="30" fill="none" stroke="currentColor" stroke-width="11"/><circle r="7" fill="currentColor"/></svg></div>
+    <div class="gears" aria-hidden="true"><svg class="gear g-big" viewBox="-50 -50 100 100" aria-hidden="true" style="color:var(--teal)"><g class="gear-in"><g fill="currentColor"><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(0)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(36)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(72)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(108)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(144)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(180)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(216)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(252)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(288)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(324)"/></g><circle r="30" fill="none" stroke="currentColor" stroke-width="11"/><circle r="7" fill="currentColor"/></g></svg><svg class="gear g-small" viewBox="-50 -50 100 100" aria-hidden="true" style="color:var(--plum)"><g class="gear-in"><g fill="currentColor"><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(0)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(60)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(120)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(180)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(240)"/><rect x="-6" y="-48" width="12" height="16" rx="2.5" transform="rotate(300)"/></g><circle r="30" fill="none" stroke="currentColor" stroke-width="11"/><circle r="7" fill="currentColor"/></g></svg></div>
     <div class="wrap">
       <div class="section-head reveal">
         <p class="label">Start for free</p>
