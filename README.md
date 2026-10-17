@@ -33,7 +33,8 @@ company policy pages linked from the footer.
 - **Section companions**: a robot arm takes blocks off a conveyor and stacks four
   of them (Why now), a three-gear train turns all the time and faster as you
   scroll (Programmes; two gears in Start for free), a demo-day scene shows a
-  student presenting a robot to a clapping audience (How a quarter works), a rover drives along its
+  student pitching a startup (GreenBin, an AI waste-sorting bin) at a lectern while
+  the slides change and three judges raise score cards (How a quarter works), a rover drives along its
   lane (The week), signals run along circuit traces into a chip (Who the centre
   serves), a drone hovers with a question parcel (FAQ) and a paper plane loops
   beside the contact details. The larger pieces hide on narrow screens.
